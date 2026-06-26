@@ -250,5 +250,41 @@
         "priceUsd": 145
       }
     }
+  },
+  {
+    "t": "2026-06-26T08:36:54.316Z",
+    "totalUsd": 281127650658,
+    "assets": {
+      "BTC": {
+        "totalAmount": 718812.02,
+        "totalUsd": 43203477542,
+        "netFlowUsd": -854132,
+        "priceUsd": 60104
+      },
+      "ETH": {
+        "totalAmount": 91776810.87,
+        "totalUsd": 143711472610,
+        "netFlowUsd": 1525445,
+        "priceUsd": 1565.88
+      },
+      "USDT": {
+        "totalAmount": 66497140603,
+        "totalUsd": 66398990823,
+        "netFlowUsd": -148784,
+        "priceUsd": 0.998524
+      },
+      "USDC": {
+        "totalAmount": 26656298096.79,
+        "totalUsd": 26648994271,
+        "netFlowUsd": -5857611,
+        "priceUsd": 0.999726
+      },
+      "SOL": {
+        "totalAmount": 16700823.24,
+        "totalUsd": 1164715412,
+        "netFlowUsd": -871486876,
+        "priceUsd": 69.74
+      }
+    }
   }
 ]
