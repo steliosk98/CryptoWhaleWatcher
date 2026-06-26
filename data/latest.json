@@ -1,0 +1,73 @@
+{
+  "generatedAt": "2026-06-26T00:00:00.000Z",
+  "_seed": "Placeholder shown until the first GitHub Actions refresh replaces it with live data.",
+  "assets": [
+    {
+      "symbol": "BTC", "name": "Bitcoin", "chain": "bitcoin", "decimals": 8,
+      "explorerAddress": "https://mempool.space/address/",
+      "priceUsd": 64000, "priceChange24h": 1.2,
+      "source": "blockchair.com (BTC rich list)", "status": "ok",
+      "holders": [
+        { "rank": 1, "address": "34xp4vRoCGJym3xR7yCVPFHoCNxv4Twseo", "short": "34xp4v…4Twseo", "amount": 248597, "usd": 15910208000, "label": "Binance (cold wallet)", "entity": "Binance", "type": "exchange", "share": null, "delta": 0, "deltaUsd": 0, "isNew": false },
+        { "rank": 2, "address": "bc1qgdjqv0av3q56jvd82tkdjpy7gdp9ut8tlqmgrpmv24sq90ecnvqqjwvw97", "short": "bc1qgd…jwvw97", "amount": 168010, "usd": 10752640000, "label": "Bitfinex (cold wallet)", "entity": "Bitfinex", "type": "exchange", "share": null, "delta": -1200, "deltaUsd": -76800000, "isNew": false },
+        { "rank": 3, "address": "1FeexV6bAHb8ybZjqQMjJrcCrHGW9sb6uF", "short": "1FeexV…W9sb6uF", "amount": 79957, "usd": 5117248000, "label": "Dormant mega-whale", "entity": "Unknown", "type": "whale", "share": null, "delta": 0, "deltaUsd": 0, "isNew": false },
+        { "rank": 4, "address": "bc1qa5wkgaew2dkv56kfvj49j0av5nml45x9ek9hz6", "short": "bc1qa5…k9hz6", "amount": 59300, "usd": 3795200000, "label": null, "entity": null, "type": "unknown", "share": null, "delta": 2100, "deltaUsd": 134400000, "isNew": false },
+        { "rank": 5, "address": "3M219KR5vEneNb47ewrPfWyb5jQ2DjxRP6", "short": "3M219K…DjxRP6", "amount": 51200, "usd": 3276800000, "label": "Binance", "entity": "Binance", "type": "exchange", "share": null, "delta": 0, "deltaUsd": 0, "isNew": true }
+      ],
+      "aggregates": { "holderCount": 5, "totalAmount": 607064, "totalUsd": 38852096000, "netFlowAmount": 900, "netFlowUsd": 57600000, "accumulators": 1, "distributors": 1 }
+    },
+    {
+      "symbol": "ETH", "name": "Ethereum", "chain": "ethereum", "decimals": 18,
+      "explorerAddress": "https://etherscan.io/address/",
+      "priceUsd": 3400, "priceChange24h": -0.8,
+      "source": "public JSON-RPC (ethereum-rpc.publicnode.com)", "status": "ok",
+      "holders": [
+        { "rank": 1, "address": "0x00000000219ab540356cBB839Cbe05303d7705Fa", "short": "0x0000…7705Fa", "amount": 62100000, "usd": 211140000000, "label": "Beacon Deposit Contract (staking)", "entity": "Ethereum", "type": "contract", "share": null, "delta": 12000, "deltaUsd": 40800000, "isNew": false },
+        { "rank": 2, "address": "0xBE0eB53F46cd790Cd13851d5EFf43D12404d33E8", "short": "0xBE0e…04d33E8", "amount": 1980000, "usd": 6732000000, "label": "Binance 7 (cold)", "entity": "Binance", "type": "exchange", "share": null, "delta": -5400, "deltaUsd": -18360000, "isNew": false },
+        { "rank": 3, "address": "0xF977814e90dA44bFA03b6295A0616a897441aceC", "short": "0xF977…441aceC", "amount": 540000, "usd": 1836000000, "label": "Binance 8", "entity": "Binance", "type": "exchange", "share": null, "delta": 3200, "deltaUsd": 10880000, "isNew": false },
+        { "rank": 4, "address": "0x2910543Af39abA0Cd09dBb2D50200b3E800A63D2", "short": "0x2910…0A63D2", "amount": 320000, "usd": 1088000000, "label": "Kraken", "entity": "Kraken", "type": "exchange", "share": null, "delta": 0, "deltaUsd": 0, "isNew": false },
+        { "rank": 5, "address": "0x40B38765696e3d5d8d9d834D8AaD4bB6e418E489", "short": "0x40B3…18E489", "amount": 210000, "usd": 714000000, "label": "Robinhood", "entity": "Robinhood", "type": "exchange", "share": null, "delta": -1500, "deltaUsd": -5100000, "isNew": false }
+      ],
+      "aggregates": { "holderCount": 5, "totalAmount": 65150000, "totalUsd": 221510000000, "netFlowAmount": 8300, "netFlowUsd": 28220000, "accumulators": 2, "distributors": 2 }
+    },
+    {
+      "symbol": "USDT", "name": "Tether USD", "chain": "ethereum", "decimals": 6,
+      "explorerAddress": "https://etherscan.io/address/",
+      "priceUsd": 1.0, "priceChange24h": 0.01,
+      "source": "ethplorer.io (top token holders)", "status": "ok",
+      "holders": [
+        { "rank": 1, "address": "0x5041ed759Dd4aFc3a72b8192C143F72f4724081A", "short": "0x5041…24081A", "amount": 1850000000, "usd": 1850000000, "label": null, "entity": null, "type": "unknown", "share": 12.4, "delta": 25000000, "deltaUsd": 25000000, "isNew": false },
+        { "rank": 2, "address": "0x28C6c06298d514Db089934071355E5743bf21d60", "short": "0x28C6…21d60", "amount": 1200000000, "usd": 1200000000, "label": "Binance 14", "entity": "Binance", "type": "exchange", "share": 8.1, "delta": -40000000, "deltaUsd": -40000000, "isNew": false },
+        { "rank": 3, "address": "0xF977814e90dA44bFA03b6295A0616a897441aceC", "short": "0xF977…441aceC", "amount": 900000000, "usd": 900000000, "label": "Binance 8", "entity": "Binance", "type": "exchange", "share": 6.0, "delta": 0, "deltaUsd": 0, "isNew": false },
+        { "rank": 4, "address": "0xA7A93fd0a276fc1C0197a5B5623eD117786eeD06", "short": "0xA7A9…6eeD06", "amount": 620000000, "usd": 620000000, "label": null, "entity": null, "type": "unknown", "share": 4.2, "delta": 12000000, "deltaUsd": 12000000, "isNew": true }
+      ],
+      "aggregates": { "holderCount": 4, "totalAmount": 4570000000, "totalUsd": 4570000000, "netFlowAmount": -15000000, "netFlowUsd": -15000000, "accumulators": 2, "distributors": 1 }
+    },
+    {
+      "symbol": "USDC", "name": "USD Coin", "chain": "ethereum", "decimals": 6,
+      "explorerAddress": "https://etherscan.io/address/",
+      "priceUsd": 1.0, "priceChange24h": -0.01,
+      "source": "ethplorer.io (top token holders)", "status": "ok",
+      "holders": [
+        { "rank": 1, "address": "0x55FE002aefF02F77364de339a1292923A15844B8", "short": "0x55FE…5844B8", "amount": 980000000, "usd": 980000000, "label": null, "entity": null, "type": "unknown", "share": 14.2, "delta": -8000000, "deltaUsd": -8000000, "isNew": false },
+        { "rank": 2, "address": "0x28C6c06298d514Db089934071355E5743bf21d60", "short": "0x28C6…21d60", "amount": 540000000, "usd": 540000000, "label": "Binance 14", "entity": "Binance", "type": "exchange", "share": 7.8, "delta": 30000000, "deltaUsd": 30000000, "isNew": false },
+        { "rank": 3, "address": "0x0A59649758aa4d66E25f08Dd01271e891fe52199", "short": "0x0A59…fe52199", "amount": 410000000, "usd": 410000000, "label": null, "entity": null, "type": "unknown", "share": 5.9, "delta": 0, "deltaUsd": 0, "isNew": false },
+        { "rank": 4, "address": "0x3300f198988e4C9C63F75dF86De36421f06af8c4", "short": "0x3300…06af8c4", "amount": 300000000, "usd": 300000000, "label": null, "entity": null, "type": "unknown", "share": 4.3, "delta": 5000000, "deltaUsd": 5000000, "isNew": false }
+      ],
+      "aggregates": { "holderCount": 4, "totalAmount": 2230000000, "totalUsd": 2230000000, "netFlowAmount": 27000000, "netFlowUsd": 27000000, "accumulators": 2, "distributors": 1 }
+    },
+    {
+      "symbol": "SOL", "name": "Solana", "chain": "solana", "decimals": 9,
+      "explorerAddress": "https://solscan.io/account/",
+      "priceUsd": 145, "priceChange24h": 2.4,
+      "source": "Solana RPC (getLargestAccounts)", "status": "partial",
+      "holders": [
+        { "rank": 1, "address": "GThUX1Atko4tqhN2NaiTazWSeFWMuiUvfFnyJyUghFMJ", "short": "GThUX1…ghFMJ", "amount": 12500000, "usd": 1812500000, "label": null, "entity": null, "type": "unknown", "share": null, "delta": 50000, "deltaUsd": 7250000, "isNew": false },
+        { "rank": 2, "address": "3emsAVdmGKERbHjmGfQ6oZ1e35dkf5iYcS6U4CPKFVaa", "short": "3emsAV…KFVaa", "amount": 8200000, "usd": 1189000000, "label": null, "entity": null, "type": "unknown", "share": null, "delta": -120000, "deltaUsd": -17400000, "isNew": false },
+        { "rank": 3, "address": "CuieVDEDtLo7FypA9SbLM9saXFdb1dsshEkyErMqkRQq", "short": "CuieVD…qkRQq", "amount": 6400000, "usd": 928000000, "label": null, "entity": null, "type": "unknown", "share": null, "delta": 0, "deltaUsd": 0, "isNew": false },
+        { "rank": 4, "address": "8BseXT9EtoEhBTKFFYkwTnjKSUZwhtmdKY2Jrj8j45Rt", "short": "8BseXT…j45Rt", "amount": 5100000, "usd": 739500000, "label": null, "entity": null, "type": "unknown", "share": null, "delta": 90000, "deltaUsd": 13050000, "isNew": false }
+      ],
+      "aggregates": { "holderCount": 4, "totalAmount": 32200000, "totalUsd": 4669000000, "netFlowAmount": 20000, "netFlowUsd": 2900000, "accumulators": 2, "distributors": 1 }
+    }
+  ]
+}

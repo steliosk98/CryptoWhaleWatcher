@@ -1,0 +1,21 @@
+{
+  "_comment": "Best-effort, community/public-sourced entity labels for well-known addresses. EVM keys are lowercased; Bitcoin/Solana keys are exact. Addresses without a label are still tracked and shown by their truncated address. Labels are informational only and may change over time — corrections via PR are welcome.",
+  "labels": {
+    "34xp4vRoCGJym3xR7yCVPFHoCNxv4Twseo": { "entity": "Binance", "label": "Binance (cold wallet)", "type": "exchange" },
+    "bc1qgdjqv0av3q56jvd82tkdjpy7gdp9ut8tlqmgrpmv24sq90ecnvqqjwvw97": { "entity": "Bitfinex", "label": "Bitfinex (cold wallet)", "type": "exchange" },
+    "1FeexV6bAHb8ybZjqQMjJrcCrHGW9sb6uF": { "entity": "Unknown", "label": "Dormant mega-whale", "type": "whale" },
+    "3M219KR5vEneNb47ewrPfWyb5jQ2DjxRP6": { "entity": "Binance", "label": "Binance", "type": "exchange" },
+    "bc1qm34lsc65zpw79lxes69zkqmk6ee3ewf0j77s3h": { "entity": "OKX", "label": "OKX", "type": "exchange" },
+    "0x00000000219ab540356cbb839cbe05303d7705fa": { "entity": "Ethereum", "label": "Beacon Deposit Contract (staking)", "type": "contract" },
+    "0xbe0eb53f46cd790cd13851d5eff43d12404d33e8": { "entity": "Binance", "label": "Binance 7 (cold)", "type": "exchange" },
+    "0xf977814e90da44bfa03b6295a0616a897441acec": { "entity": "Binance", "label": "Binance 8", "type": "exchange" },
+    "0x28c6c06298d514db089934071355e5743bf21d60": { "entity": "Binance", "label": "Binance 14", "type": "exchange" },
+    "0x21a31ee1afc51d94c2efccaa2092ad1028285549": { "entity": "Binance", "label": "Binance 15", "type": "exchange" },
+    "0xdfd5293d8e347dfe59e90efd55b2956a1343963d": { "entity": "Binance", "label": "Binance 16", "type": "exchange" },
+    "0x9696f59e4d72e237be84ffd425dcad154bf96976": { "entity": "Binance", "label": "Binance", "type": "exchange" },
+    "0x4976a4a02f38326660d17bf34b431dc6e2eb2327": { "entity": "Binance", "label": "Binance", "type": "exchange" },
+    "0x2910543af39aba0cd09dbb2d50200b3e800a63d2": { "entity": "Kraken", "label": "Kraken", "type": "exchange" },
+    "0x40b38765696e3d5d8d9d834d8aad4bb6e418e489": { "entity": "Robinhood", "label": "Robinhood", "type": "exchange" },
+    "0x5a52e96bacdabb82fd05763e25335261b270efcb": { "entity": "Binance", "label": "Binance (cold)", "type": "exchange" }
+  }
+}

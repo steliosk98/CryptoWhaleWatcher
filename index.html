@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crypto Whale Watcher — On-chain whale movements dashboard</title>
+  <meta name="description" content="A free, open-source quant-style dashboard tracking the movements of the largest crypto whale addresses across BTC, ETH, stablecoins and Solana — built entirely on free public APIs." />
+  <meta property="og:title" content="Crypto Whale Watcher" />
+  <meta property="og:description" content="Track the biggest crypto whales across major chains. Free & open source." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐋</text></svg>" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="logo">🐋</div>
+        <div>
+          <h1>Whale Watcher</h1>
+          <div class="sub">on-chain whale movement intelligence</div>
+        </div>
+      </div>
+      <div class="spacer"></div>
+      <span class="status-pill"><span class="dot"></span><span id="status-text">connecting…</span></span>
+      <a class="ghlink" id="repo-link" href="https://github.com/steliosk98/CryptoWhaleWatcher" target="_blank" rel="noopener">★ GitHub</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <h2>Follow the smart money. Watch the whales.</h2>
+      <p>Live snapshots of the largest known holder &amp; exchange addresses across major crypto assets, with balance-change (accumulation / distribution) tracking. 100% free, open-source data — no account, no paywall.</p>
+    </section>
+
+    <section class="kpis" id="kpis">
+      <div class="kpi"><div class="label">Tracked value</div><div class="value" id="kpi-value">—</div><div class="meta muted" id="kpi-value-sub">across all assets</div></div>
+      <div class="kpi"><div class="label">Net flow (since last)</div><div class="value" id="kpi-flow">—</div><div class="meta muted" id="kpi-flow-sub">whale balance Δ</div></div>
+      <div class="kpi"><div class="label">Addresses tracked</div><div class="value" id="kpi-addrs">—</div><div class="meta muted" id="kpi-addrs-sub">whales &amp; exchanges</div></div>
+      <div class="kpi"><div class="label">Assets</div><div class="value" id="kpi-assets">—</div><div class="meta muted" id="kpi-assets-sub">chains monitored</div></div>
+    </section>
+
+    <nav class="tabs" id="tabs"></nav>
+
+    <div id="panel-container">
+      <div class="loading" id="loading"><span class="spinner"></span>Loading whale data…</div>
+    </div>
+
+    <section class="panel hidden" id="movers-panel">
+      <div class="panel-head"><span class="pname">⚡ Biggest movers</span><span class="badge">since previous snapshot</span></div>
+      <div class="movers">
+        <div>
+          <div class="panel-head" style="border-top:none;background:transparent"><span class="pname pos">▲ Top accumulators</span></div>
+          <ul class="mlist" id="movers-acc"></ul>
+        </div>
+        <div>
+          <div class="panel-head" style="border-top:none;background:transparent"><span class="pname neg">▼ Top distributors</span></div>
+          <ul class="mlist" id="movers-dist"></ul>
+        </div>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <div class="disc" id="disclaimer">—</div>
+      <div>
+        Data refreshes automatically via GitHub Actions. Sources:
+        <div class="srcs" id="sources"></div>
+      </div>
+      <p style="margin-top:14px">
+        Open source under MIT ·
+        <a id="repo-link2" href="https://github.com/steliosk98/CryptoWhaleWatcher" target="_blank" rel="noopener">view code &amp; contribute on GitHub</a>
+        · Not financial advice.
+      </p>
+    </footer>
+  </main>
+
+  <script src="assets/js/app.js" defer></script>
+</body>
+</html>
