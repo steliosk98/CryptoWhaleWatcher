@@ -1,6 +1,8 @@
 // Pure transform logic: enrich raw holders with labels, prices, and movement
-// deltas vs the previous snapshot, then aggregate. No I/O or network here so it
-// can be unit-tested directly (see scripts/selftest.mjs).
+// deltas vs the previous snapshot, then aggregate — split by cohort so the UI
+// can separate directional "smart-money" whales from custodial exchange
+// reserves. No I/O or network here so it can be unit-tested directly
+// (see scripts/selftest.mjs).
 
 import { normAddr, lookupLabel } from './util.mjs';
 
@@ -8,6 +10,18 @@ export function shortenAddr(addr) {
   if (!addr) return '';
   if (addr.length <= 14) return addr;
   return `${addr.slice(0, 6)}…${addr.slice(-6)}`;
+}
+
+/**
+ * Cohort an address belongs to:
+ *  - exchange : custodial exchange wallet (reserves / flow signal)
+ *  - contract : staking deposit, bridge, or protocol contract (informational)
+ *  - whale    : individual / unknown large holder (directional signal)
+ */
+export function cohortOf(type) {
+  if (type === 'exchange') return 'exchange';
+  if (type === 'contract') return 'contract';
+  return 'whale';
 }
 
 /**
@@ -28,6 +42,7 @@ export function buildAssetView(asset, holders, priceInfo, prevMap, labels) {
     const prev = prevMap.get(key);
     const hasPrev = typeof prev === 'number';
     const delta = hasPrev ? h.amount - prev : 0;
+    const type = meta?.type || 'unknown';
     return {
       rank: i + 1,
       address: h.address,
@@ -36,7 +51,8 @@ export function buildAssetView(asset, holders, priceInfo, prevMap, labels) {
       usd: round(h.amount * price, 2),
       label: meta?.label || null,
       entity: meta?.entity || null,
-      type: meta?.type || 'unknown',
+      type,
+      cohort: cohortOf(type),
       share: typeof h.share === 'number' ? round(h.share, 4) : null,
       delta: round(delta, 4),
       deltaUsd: round(delta * price, 2),
@@ -48,6 +64,7 @@ export function buildAssetView(asset, holders, priceInfo, prevMap, labels) {
   const netFlowAmount = sum(enriched.filter((h) => !h.isNew).map((h) => h.delta));
   const accumulators = enriched.filter((h) => h.delta > 0).length;
   const distributors = enriched.filter((h) => h.delta < 0).length;
+  const cohorts = cohortStats(enriched, price);
 
   return {
     symbol: asset.symbol,
@@ -58,6 +75,7 @@ export function buildAssetView(asset, holders, priceInfo, prevMap, labels) {
     priceUsd: round(price, price < 10 ? 6 : 2),
     priceChange24h: round(priceChange, 2),
     holders: enriched,
+    cohorts,
     aggregates: {
       holderCount: enriched.length,
       totalAmount: round(totalAmount, 2),
@@ -66,8 +84,40 @@ export function buildAssetView(asset, holders, priceInfo, prevMap, labels) {
       netFlowUsd: round(netFlowAmount * price, 0),
       accumulators,
       distributors,
+      // cohort convenience fields (used by KPIs + history)
+      whaleUsd: cohorts.whale.usd,
+      exchangeUsd: cohorts.exchange.usd,
+      contractUsd: cohorts.contract.usd,
+      whaleNetFlowUsd: cohorts.whale.netFlowUsd,
+      exchangeNetFlowUsd: cohorts.exchange.netFlowUsd,
+      whaleCount: cohorts.whale.count,
+      exchangeCount: cohorts.exchange.count,
     },
   };
+}
+
+/** Aggregate enriched holders into per-cohort stats. */
+export function cohortStats(holders, price) {
+  const make = () => ({ count: 0, amount: 0, netFlowAmount: 0, accumulators: 0, distributors: 0 });
+  const c = { whale: make(), exchange: make(), contract: make() };
+  for (const h of holders) {
+    const g = c[h.cohort] || c.whale;
+    g.count++;
+    g.amount += h.amount;
+    if (!h.isNew) {
+      g.netFlowAmount += h.delta;
+      if (h.delta > 0) g.accumulators++;
+      else if (h.delta < 0) g.distributors++;
+    }
+  }
+  for (const k of Object.keys(c)) {
+    const g = c[k];
+    g.amount = round(g.amount, 2);
+    g.usd = round(g.amount * price, 0);
+    g.netFlowAmount = round(g.netFlowAmount, 2);
+    g.netFlowUsd = round(g.netFlowAmount * price, 0);
+  }
+  return c;
 }
 
 /** Build a Map<normAddr, amount> from a previous asset view (or undefined). */
@@ -84,13 +134,18 @@ export function buildHistoryPoint(timestamp, assetViews) {
   let totalUsd = 0;
   for (const a of assetViews) {
     if (!a || a.status === 'error') continue;
+    const ag = a.aggregates || {};
     assets[a.symbol] = {
-      totalAmount: a.aggregates.totalAmount,
-      totalUsd: a.aggregates.totalUsd,
-      netFlowUsd: a.aggregates.netFlowUsd,
+      totalAmount: ag.totalAmount,
+      totalUsd: ag.totalUsd,
+      netFlowUsd: ag.netFlowUsd,
       priceUsd: a.priceUsd,
+      whaleUsd: ag.whaleUsd,
+      exchangeUsd: ag.exchangeUsd,
+      whaleNetFlowUsd: ag.whaleNetFlowUsd,
+      exchangeNetFlowUsd: ag.exchangeNetFlowUsd,
     };
-    totalUsd += a.aggregates.totalUsd || 0;
+    totalUsd += ag.totalUsd || 0;
   }
   return { t: timestamp, totalUsd: Math.round(totalUsd), assets };
 }

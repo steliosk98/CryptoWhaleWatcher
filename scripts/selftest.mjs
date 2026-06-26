@@ -9,6 +9,7 @@ import {
   prevAmountMap,
   buildHistoryPoint,
   shortenAddr,
+  cohortOf,
   round,
 } from './lib/build.mjs';
 
@@ -92,6 +93,24 @@ test('buildAssetView computes deltas, USD, aggregates', () => {
   assert.equal(v.aggregates.accumulators, 1);
   assert.equal(v.aggregates.distributors, 1);
   assert.equal(v.priceChange24h, 1.5);
+
+  // cohort split: A is an exchange, B & C are whales (unlabeled)
+  assert.equal(v.holders[0].cohort, 'exchange');
+  assert.equal(v.holders[1].cohort, 'whale');
+  assert.equal(v.cohorts.exchange.amount, 100);
+  assert.equal(v.cohorts.exchange.usd, 200);
+  assert.equal(v.cohorts.whale.amount, 60); // 50 + 10
+  assert.equal(v.cohorts.whale.netFlowUsd, -40); // only B has prev: -20 * 2
+  assert.equal(v.aggregates.exchangeNetFlowUsd, 20); // A: +10 * 2
+  assert.equal(v.aggregates.whaleCount, 2);
+});
+
+test('cohortOf maps types to cohorts', () => {
+  assert.equal(cohortOf('exchange'), 'exchange');
+  assert.equal(cohortOf('contract'), 'contract');
+  assert.equal(cohortOf('whale'), 'whale');
+  assert.equal(cohortOf('unknown'), 'whale');
+  assert.equal(cohortOf(undefined), 'whale');
 });
 
 test('buildHistoryPoint sums healthy assets only', () => {

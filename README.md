@@ -16,16 +16,21 @@ it and host their own copy in minutes.
 
 ## What it shows
 
+- **Whales vs exchanges, separated** — directional "smart-money" whale holdings
+  are split from custodial **exchange reserves**, because they mean different
+  things: a whale accumulating is a position; exchange inflow = potential sell
+  pressure, outflow = accumulation. Staking/bridge **contracts** are broken out
+  too. Each cohort gets its own table per asset.
 - **Top holders per asset** — exchange-grade rich lists and the largest known
   wallets, with best-effort entity labels (Binance, Bitfinex, Kraken, …).
 - **Movement tracking** — per-address balance change since the previous
   snapshot (Δ balance / Δ USD), flagged as accumulation (▲) or distribution (▼).
-- **Net flow & KPIs** — aggregate tracked value, net whale flow, addresses
-  monitored, and a per-asset acc/dist breakdown.
-- **Biggest movers** — the largest accumulators and distributors across all
-  assets each refresh.
-- **History trend** — a tracked-value sparkline that builds up over time from
-  committed snapshots.
+- **Signal KPIs** — aggregate tracked value, whale net flow (accumulation /
+  distribution) and exchange net flow (sell pressure / accumulation).
+- **Overview charts** — holder-composition donut (whale / exchange / contract),
+  tracked-value-by-asset bars, and a total-tracked-value history area chart.
+- **Per-asset history** — whale holdings vs exchange reserves over time.
+- **Biggest movers** — split into whale movers (signal) and exchange flows.
 
 ## How it works
 

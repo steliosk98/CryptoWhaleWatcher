@@ -38,9 +38,24 @@
 
     <section class="kpis" id="kpis">
       <div class="kpi"><div class="label">Tracked value</div><div class="value" id="kpi-value">—</div><div class="meta muted" id="kpi-value-sub">across all assets</div></div>
-      <div class="kpi"><div class="label">Net flow (since last)</div><div class="value" id="kpi-flow">—</div><div class="meta muted" id="kpi-flow-sub">whale balance Δ</div></div>
-      <div class="kpi"><div class="label">Addresses tracked</div><div class="value" id="kpi-addrs">—</div><div class="meta muted" id="kpi-addrs-sub">whales &amp; exchanges</div></div>
-      <div class="kpi"><div class="label">Assets</div><div class="value" id="kpi-assets">—</div><div class="meta muted" id="kpi-assets-sub">chains monitored</div></div>
+      <div class="kpi"><div class="label">🐋 Whale net flow</div><div class="value" id="kpi-whaleflow">—</div><div class="meta muted" id="kpi-whaleflow-sub">smart-money signal</div></div>
+      <div class="kpi"><div class="label">🏦 Exchange net flow</div><div class="value" id="kpi-exflow">—</div><div class="meta muted" id="kpi-exflow-sub">reserve change</div></div>
+      <div class="kpi"><div class="label">Tracked addresses</div><div class="value" id="kpi-cohorts">—</div><div class="meta muted" id="kpi-cohorts-sub">whales / exchanges</div></div>
+    </section>
+
+    <section class="overview" id="overview">
+      <div class="panel ov-card">
+        <div class="panel-head"><span class="pname">Holder composition</span><span class="badge">by USD value</span></div>
+        <div class="ov-body" id="ov-composition"></div>
+      </div>
+      <div class="panel ov-card">
+        <div class="panel-head"><span class="pname">Tracked value by asset</span></div>
+        <div class="ov-body" id="ov-byasset"></div>
+      </div>
+      <div class="panel ov-card">
+        <div class="panel-head"><span class="pname">Total tracked value</span><span class="badge" id="ov-hist-badge">history</span></div>
+        <div class="ov-body" id="ov-history"></div>
+      </div>
     </section>
 
     <nav class="tabs" id="tabs"></nav>
@@ -53,12 +68,12 @@
       <div class="panel-head"><span class="pname">⚡ Biggest movers</span><span class="badge">since previous snapshot</span></div>
       <div class="movers">
         <div>
-          <div class="panel-head" style="border-top:none;background:transparent"><span class="pname pos">▲ Top accumulators</span></div>
-          <ul class="mlist" id="movers-acc"></ul>
+          <div class="sub-head"><span class="pname">🐋 Whale movers</span><span class="muted small">directional signal</span></div>
+          <ul class="mlist" id="movers-whales"></ul>
         </div>
         <div>
-          <div class="panel-head" style="border-top:none;background:transparent"><span class="pname neg">▼ Top distributors</span></div>
-          <ul class="mlist" id="movers-dist"></ul>
+          <div class="sub-head"><span class="pname">🏦 Exchange flows</span><span class="muted small">in = sell pressure · out = accumulation</span></div>
+          <ul class="mlist" id="movers-exchanges"></ul>
         </div>
       </div>
     </section>

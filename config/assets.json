@@ -30,6 +30,7 @@
       "topSource": "evm-curated-balances",
       "limit": 100,
       "curated": [
+        "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
         "0x00000000219ab540356cBB839Cbe05303d7705Fa",
         "0xBE0eB53F46cd790Cd13851d5EFf43D12404d33E8",
         "0xF977814e90dA44bFA03b6295A0616a897441aceC",

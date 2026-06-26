@@ -6,6 +6,7 @@
     "1FeexV6bAHb8ybZjqQMjJrcCrHGW9sb6uF": { "entity": "Unknown", "label": "Dormant mega-whale", "type": "whale" },
     "3M219KR5vEneNb47ewrPfWyb5jQ2DjxRP6": { "entity": "Binance", "label": "Binance", "type": "exchange" },
     "bc1qm34lsc65zpw79lxes69zkqmk6ee3ewf0j77s3h": { "entity": "OKX", "label": "OKX", "type": "exchange" },
+    "0xd8da6bf26964af9d7eed9e03e53415d37aa96045": { "entity": "Vitalik Buterin", "label": "Vitalik Buterin (vitalik.eth)", "type": "whale" },
     "0x00000000219ab540356cbb839cbe05303d7705fa": { "entity": "Ethereum", "label": "Beacon Deposit Contract (staking)", "type": "contract" },
     "0xbe0eb53f46cd790cd13851d5eff43d12404d33e8": { "entity": "Binance", "label": "Binance 7 (cold)", "type": "exchange" },
     "0xf977814e90da44bfa03b6295a0616a897441acec": { "entity": "Binance", "label": "Binance 8", "type": "exchange" },
