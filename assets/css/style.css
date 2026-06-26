@@ -42,7 +42,7 @@
   --text: var(--white);
   --text-2: var(--slate-300);
   --muted: var(--slate-400);
-  --faint: #6B7C95;
+  --faint: var(--slate-500);
   --primary: var(--amber-500);
   --accent: var(--violet-500);
   --up: var(--green-500);
@@ -159,12 +159,10 @@ strong { color: var(--text); font-weight: 600; }
 .kpi {
   position: relative; background: linear-gradient(180deg, var(--panel), var(--surface));
   border: 1px solid var(--border); border-radius: var(--r); padding: var(--s4) var(--s5) var(--s5);
-  box-shadow: var(--sh-2), inset 0 1px 0 rgba(255, 255, 255, 0.035);
-  overflow: hidden; transition: transform var(--t) var(--ease), border-color var(--t);
+  box-shadow: var(--sh-2); overflow: hidden; transition: transform var(--t) var(--ease), border-color var(--t);
 }
-.kpi::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 2px; background: linear-gradient(90deg, var(--primary), transparent 55%); opacity: 0.45; transition: opacity var(--t); }
+.kpi::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 2px; background: linear-gradient(90deg, var(--primary), transparent 70%); opacity: 0.8; }
 .kpi:hover { transform: translateY(-2px); border-color: var(--border-strong); }
-.kpi:hover::before { opacity: 0.85; }
 .kpi-top { display: flex; align-items: center; justify-content: space-between; gap: var(--s2); }
 .kpi-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); font-weight: 500; }
 .kpi-ic { width: 16px; height: 16px; color: var(--faint); }
@@ -172,7 +170,7 @@ strong { color: var(--text); font-weight: 600; }
 .kpi .meta { font-size: 12px; margin-top: 3px; font-family: var(--mono); }
 
 /* ============================ Panels ============================ */
-.panel { background: var(--panel); border: 1px solid var(--border); border-radius: var(--r); box-shadow: var(--sh-2), inset 0 1px 0 rgba(255, 255, 255, 0.03); overflow: hidden; }
+.panel { background: var(--panel); border: 1px solid var(--border); border-radius: var(--r); box-shadow: var(--sh-2); overflow: hidden; }
 .panel + .panel { margin-top: var(--s4); }
 .panel-head { display: flex; align-items: center; gap: var(--s3); flex-wrap: wrap; padding: var(--s4) var(--s5); border-bottom: 1px solid var(--border); background: linear-gradient(180deg, var(--surface), var(--panel)); }
 .panel-head .head-ic { width: 17px; height: 17px; color: var(--primary); }
@@ -347,8 +345,8 @@ table.holders tbody tr:hover td { background: rgba(245, 158, 11, 0.045); }
 .chart-tooltip .tt-row i { width: 9px; height: 9px; border-radius: 2px; display: inline-block; }
 
 /* entrance stagger */
-@keyframes rise { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
-[data-stagger] { animation: rise 0.42s var(--ease) both; }
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+[data-stagger] { animation: rise 0.5s var(--ease) both; }
 
 /* ============================ Responsive ============================ */
 @media (max-width: 1040px) {
@@ -371,10 +369,14 @@ table.holders tbody tr:hover td { background: rgba(245, 158, 11, 0.045); }
    MISSION CONTROL layer — ticker, command bar, terminal panels, gauge, heatmap,
    activity log. Builds on the tokens above.
    ========================================================================== */
+:root { --mc-line: rgba(148, 163, 184, 0.06); }
+
 body {
   background:
-    radial-gradient(1200px 620px at 86% -14%, rgba(245, 158, 11, 0.055), transparent 62%),
-    radial-gradient(1000px 560px at -10% -8%, rgba(139, 92, 246, 0.045), transparent 60%),
+    linear-gradient(var(--mc-line) 1px, transparent 1px) 0 0 / 100% 34px,
+    linear-gradient(90deg, var(--mc-line) 1px, transparent 1px) 0 0 / 34px 100%,
+    radial-gradient(1100px 540px at 90% -10%, rgba(245, 158, 11, 0.08), transparent 60%),
+    radial-gradient(900px 520px at -8% -6%, rgba(139, 92, 246, 0.08), transparent 58%),
     var(--navy-950);
 }
 
@@ -401,12 +403,11 @@ body {
 .cmd-status .seg .v { color: var(--text); }
 .cmd-status .seg.live { color: var(--up); border-color: rgba(34, 197, 94, 0.3); }
 .led { width: 7px; height: 7px; border-radius: 50%; background: var(--faint); flex: none; }
-.led-on { background: var(--up); box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.25), 0 0 7px rgba(34, 197, 94, 0.55); }
-.led-warn { background: var(--amber-400); box-shadow: 0 0 7px rgba(251, 191, 36, 0.5); }
-.led-off { background: var(--down); box-shadow: 0 0 7px rgba(239, 68, 68, 0.5); }
-.cmd-status .seg.live .led-on { animation: livepulse 3s ease-in-out infinite; }
-.leds { display: inline-flex; gap: 5px; margin-left: 5px; }
-@keyframes livepulse { 0%, 100% { box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.25), 0 0 6px rgba(34, 197, 94, 0.45); } 50% { box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.35), 0 0 11px rgba(34, 197, 94, 0.7); } }
+.led-on { background: var(--up); box-shadow: 0 0 6px var(--up); animation: blink 2.6s infinite; }
+.led-warn { background: var(--amber-400); box-shadow: 0 0 6px var(--amber-400); }
+.led-off { background: var(--down); box-shadow: 0 0 6px var(--down); }
+.leds { display: inline-flex; gap: 4px; margin-left: 4px; }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
 
 /* ---- terminal panels ---- */
 .term { background: linear-gradient(180deg, var(--panel), var(--surface)); }
@@ -419,8 +420,7 @@ body {
 /* ---- mission-control bento grid ---- */
 .mc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s4); margin: var(--s2) 0 var(--s2); }
 .mc-grid .span2 { grid-column: span 2; }
-.mc-grid .term { border-radius: var(--r); border: 1px solid var(--border); box-shadow: var(--sh-2), inset 0 1px 0 rgba(255, 255, 255, 0.03); overflow: hidden; display: flex; flex-direction: column; transition: border-color var(--t); }
-.mc-grid .term:hover { border-color: var(--border-strong); }
+.mc-grid .term { border-radius: var(--r); border: 1px solid var(--border); box-shadow: var(--sh-2); overflow: hidden; display: flex; flex-direction: column; }
 .mc-grid .term-body { flex: 1; display: flex; align-items: center; }
 .mc-grid .term-body > * { width: 100%; }
 
@@ -459,7 +459,7 @@ body {
 
 /* ---- activity log console ---- */
 .mc-bottom { display: grid; grid-template-columns: 1.15fr 1fr; gap: var(--s4); margin-top: var(--s4); }
-.mc-bottom .term { border-radius: var(--r); border: 1px solid var(--border); box-shadow: var(--sh-2), inset 0 1px 0 rgba(255, 255, 255, 0.03); overflow: hidden; }
+.mc-bottom .term { border-radius: var(--r); border: 1px solid var(--border); box-shadow: var(--sh-2); overflow: hidden; }
 .logfeed { list-style: none; margin: 0; padding: var(--s2) 0; max-height: 360px; overflow-y: auto; }
 .logfeed li { display: flex; align-items: baseline; gap: var(--s3); padding: 6px var(--s5); font-family: var(--mono); font-size: 12px; border-bottom: 1px solid rgba(30, 42, 64, 0.45); }
 .logfeed li:last-child { border-bottom: none; }
@@ -472,13 +472,6 @@ body {
 /* compact hero for mission control */
 .hero { padding: var(--s6) 0 var(--s1); }
 .hero h1 { font-size: 23px; }
-
-/* section eyebrow dividers */
-.section-label { display: flex; align-items: center; gap: var(--s3); margin: var(--s8) 0 var(--s4); }
-.section-label .ic { width: 14px; height: 14px; color: var(--primary); flex: none; }
-.section-label h2 { font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin: 0; white-space: nowrap; }
-.section-label::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, var(--border-strong), transparent); }
-.tabs { margin-top: var(--s2); }
 
 @media (max-width: 1040px) {
   .mc-grid { grid-template-columns: repeat(2, 1fr); }
