@@ -397,6 +397,8 @@ body {
 /* ---- command bar ---- */
 .cmdbar { position: sticky; top: 0; z-index: 30; background: linear-gradient(180deg, rgba(7, 11, 18, 0.96), rgba(7, 11, 18, 0.78)); backdrop-filter: blur(12px) saturate(120%); border-bottom: 1px solid var(--border-strong); }
 .cmdbar-inner { max-width: 1280px; margin: 0 auto; padding: var(--s3) var(--s6); display: flex; align-items: center; gap: var(--s5); }
+.cmdbar-inner .spacer { flex: 1 1 auto; }
+.cmdbar-inner .ghlink { margin-left: auto; }
 .cmd-status { display: flex; align-items: center; gap: var(--s4); flex-wrap: wrap; }
 .cmd-status .seg { display: inline-flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 11px; padding: 4px 11px; border: 1px solid var(--border); border-radius: var(--r-sm); background: rgba(15, 22, 38, 0.6); }
 .cmd-status .seg .k { color: var(--faint); letter-spacing: 0.1em; }
