@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'data/**'
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Unit tests (pure logic, offline)
+        run: node scripts/selftest.mjs
+      - name: Validate config & data JSON
+        run: node scripts/validate.mjs

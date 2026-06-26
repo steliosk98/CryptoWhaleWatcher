@@ -1,0 +1,14 @@
+{
+  "generatedAt": "2026-06-26T00:00:00.000Z",
+  "assetCount": 5,
+  "okCount": 5,
+  "sources": [
+    "blockchair.com (BTC rich list)",
+    "coingecko.com (prices)",
+    "ethplorer.io (top token holders)",
+    "public JSON-RPC (ethereum-rpc.publicnode.com)",
+    "Solana RPC (getLargestAccounts)"
+  ],
+  "cadence": "every 6 hours via GitHub Actions",
+  "disclaimer": "Tracks publicly-labeled large/whale addresses and exchange-grade rich lists from free, keyless public APIs. Movements are computed from balance changes between snapshots. Entity labels are best-effort and community-sourced. Not financial advice."
+}
