@@ -1,0 +1,84 @@
+{
+  "updatedAt": "2026-06-26T14:14:29.730Z",
+  "assets": {
+    "BTC": {
+      "exchangeNetFlow1dUsd": 0,
+      "exchangeNetFlow7dUsd": 0,
+      "exchangeNetFlowZ": 0,
+      "exchangeLean": "neutral",
+      "whaleNetFlow7dUsd": 0,
+      "whaleAccumulationScore": null,
+      "whaleLean": "neutral",
+      "exchangeReserveAmount": 570151.21,
+      "reserveChange30dPct": null,
+      "reserveLean": "neutral",
+      "priceChange7dPct": -4.6,
+      "divergence": "none",
+      "samples": 1
+    },
+    "ETH": {
+      "exchangeNetFlow1dUsd": 0,
+      "exchangeNetFlow7dUsd": 0,
+      "exchangeNetFlowZ": 0,
+      "exchangeLean": "neutral",
+      "whaleNetFlow7dUsd": 0,
+      "whaleAccumulationScore": null,
+      "whaleLean": "neutral",
+      "exchangeReserveAmount": 4376846.27,
+      "reserveChange30dPct": null,
+      "reserveLean": "neutral",
+      "priceChange7dPct": -8.83,
+      "divergence": "none",
+      "samples": 1
+    },
+    "USDT": {
+      "exchangeNetFlow1dUsd": 0,
+      "exchangeNetFlow7dUsd": 0,
+      "exchangeNetFlowZ": 0,
+      "exchangeLean": "neutral",
+      "whaleNetFlow7dUsd": 0,
+      "whaleAccumulationScore": null,
+      "whaleLean": "neutral",
+      "exchangeReserveAmount": 22619348548.91,
+      "reserveChange30dPct": null,
+      "reserveLean": "neutral",
+      "priceChange7dPct": 0.04,
+      "divergence": "none",
+      "samples": 1
+    },
+    "USDC": {
+      "exchangeNetFlow1dUsd": 0,
+      "exchangeNetFlow7dUsd": 0,
+      "exchangeNetFlowZ": 0,
+      "exchangeLean": "neutral",
+      "whaleNetFlow7dUsd": 0,
+      "whaleAccumulationScore": null,
+      "whaleLean": "neutral",
+      "exchangeReserveAmount": 0,
+      "reserveChange30dPct": null,
+      "reserveLean": "neutral",
+      "priceChange7dPct": -0.03,
+      "divergence": "none",
+      "samples": 1
+    },
+    "SOL": {
+      "exchangeNetFlow1dUsd": 0,
+      "exchangeNetFlow7dUsd": 0,
+      "exchangeNetFlowZ": 0,
+      "exchangeLean": "neutral",
+      "whaleNetFlow7dUsd": 0,
+      "whaleAccumulationScore": null,
+      "whaleLean": "neutral",
+      "exchangeReserveAmount": 16745150.13,
+      "reserveChange30dPct": null,
+      "reserveLean": "neutral",
+      "priceChange7dPct": -0.1,
+      "divergence": "none",
+      "samples": 1
+    }
+  },
+  "dryPowder": {
+    "usd": 93046735673,
+    "change7dPct": null
+  }
+}
