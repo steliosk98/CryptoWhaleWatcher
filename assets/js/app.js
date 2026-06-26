@@ -285,8 +285,7 @@
     host.innerHTML = `
       <div class="panel term" data-stagger>
         <div class="term-head">
-          <span class="dots"><i></i><i></i><i></i></span>
-          ${assetChip(a.symbol)}
+                    ${assetChip(a.symbol)}
           <span class="pname">${esc(a.name)} · ${esc(a.symbol)}</span>
           <span class="pprice">${fmtPrice(a.priceUsd)} <span class="${cls(a.priceChange24h)}">${trendIc(a.priceChange24h)} ${pct(a.priceChange24h)}</span></span>
           <span class="term-tag" style="margin-left:auto">${esc(a.source || 'public API')}</span>
