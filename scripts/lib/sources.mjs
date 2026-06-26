@@ -3,7 +3,7 @@
 // All sources are free and keyless. Each is invoked inside try/catch by the
 // orchestrator, so a single failing source never aborts the whole run.
 
-import { fetchJson, toUnits, hexToBig } from './util.mjs';
+import { fetchJson, fetchText, chunk, toUnits, hexToBig } from './util.mjs';
 
 const EVM_RPCS = [
   'https://ethereum-rpc.publicnode.com',
@@ -12,25 +12,48 @@ const EVM_RPCS = [
   'https://cloudflare-eth.com',
 ];
 
-/** Bitcoin: real top-N addresses by balance via Blockchair (keyless). */
-export async function blockchairBtc(asset) {
-  const limit = Math.min(asset.limit || 100, 100);
-  const url = `https://api.blockchair.com/bitcoin/addresses?limit=${limit}`;
-  const json = await fetchJson(url, { timeoutMs: 25000 });
-  // Blockchair's /addresses returns data either as an array of
-  // {address, balance} or as an object keyed by address -> balance.
-  const data = json?.data;
-  const rows = Array.isArray(data)
-    ? data
-    : data && typeof data === 'object'
-      ? Object.entries(data).map(([address, v]) => ({ address, balance: v?.balance ?? v }))
-      : [];
-  const holders = rows
-    .map((r) => ({ address: r.address, amount: toUnits(r.balance, asset.decimals) }))
-    .filter((h) => h.address && h.amount > 0)
+const SOLANA_RPCS = [
+  'https://api.mainnet-beta.solana.com',
+  'https://solana-rpc.publicnode.com',
+  'https://rpc.ankr.com/solana',
+];
+
+/**
+ * Bitcoin: balances of curated large/whale addresses via blockchain.info
+ * (keyless, CI-friendly). Tries the multi-address balance endpoint first and
+ * falls back to per-address queries so one bad address can't break the batch.
+ */
+export async function blockchainInfoBalances(asset) {
+  const addrs = asset.curated || [];
+  if (!addrs.length) throw new Error(`no curated addresses for ${asset.symbol}`);
+  const found = new Map();
+
+  for (const group of chunk(addrs, 40)) {
+    try {
+      const url = `https://blockchain.info/balance?cors=true&active=${group.join('|')}`;
+      const json = await fetchJson(url, { timeoutMs: 25000, retries: 1 });
+      for (const a of group) {
+        const bal = json?.[a]?.final_balance;
+        if (typeof bal === 'number') found.set(a, bal);
+      }
+    } catch {
+      // Per-address fallback (plain-text satoshi value); skip any that fail.
+      for (const a of group) {
+        try {
+          const txt = await fetchText(`https://blockchain.info/q/addressbalance/${a}?confirmations=1`, { timeoutMs: 12000 });
+          const bal = Number(txt.trim());
+          if (isFinite(bal)) found.set(a, bal);
+        } catch { /* skip */ }
+      }
+    }
+  }
+
+  const holders = [...found.entries()]
+    .map(([address, sats]) => ({ address, amount: toUnits(sats, asset.decimals) }))
+    .filter((h) => h.amount > 0)
     .sort((a, b) => b.amount - a.amount);
-  if (!holders.length) throw new Error('blockchair returned no BTC addresses');
-  return { source: 'blockchair.com (BTC rich list)', holders };
+  if (!holders.length) throw new Error('no BTC balances resolved');
+  return { source: 'blockchain.info (curated BTC whales)', holders };
 }
 
 /** ERC-20 token: real top-N holders via Ethplorer public "freekey". */
@@ -84,25 +107,34 @@ export async function evmCuratedBalances(asset) {
   throw lastErr || new Error('all EVM RPC endpoints failed');
 }
 
-/** Solana: top accounts via getLargestAccounts RPC (returns up to 20). */
+/** Solana: top accounts via getLargestAccounts RPC, trying several endpoints. */
 export async function solanaLargestAccounts(asset) {
-  const rpc = 'https://api.mainnet-beta.solana.com';
-  const json = await fetchJson(rpc, {
-    method: 'POST',
-    body: { jsonrpc: '2.0', id: 1, method: 'getLargestAccounts', params: [{ filter: 'circulating' }] },
-    timeoutMs: 25000,
-  });
-  const rows = json?.result?.value || [];
-  const holders = rows
-    .map((r) => ({ address: r.address, amount: toUnits(r.lamports, asset.decimals) }))
-    .filter((h) => h.address && h.amount > 0)
-    .slice(0, asset.limit || 20);
-  if (!holders.length) throw new Error('solana getLargestAccounts returned nothing');
-  return { source: 'Solana RPC (getLargestAccounts)', holders };
+  let lastErr;
+  for (const rpc of SOLANA_RPCS) {
+    try {
+      const json = await fetchJson(rpc, {
+        method: 'POST',
+        body: { jsonrpc: '2.0', id: 1, method: 'getLargestAccounts', params: [{ filter: 'circulating' }] },
+        timeoutMs: 25000,
+        retries: 1,
+      });
+      if (json?.error) throw new Error(json.error.message || 'rpc error');
+      const rows = json?.result?.value || [];
+      const holders = rows
+        .map((r) => ({ address: r.address, amount: toUnits(r.lamports, asset.decimals) }))
+        .filter((h) => h.address && h.amount > 0)
+        .slice(0, asset.limit || 20);
+      if (!holders.length) throw new Error('empty result');
+      return { source: `Solana RPC getLargestAccounts (${new URL(rpc).host})`, holders };
+    } catch (err) {
+      lastErr = err;
+    }
+  }
+  throw lastErr || new Error('all Solana RPC endpoints failed');
 }
 
 const STRATEGIES = {
-  'blockchair-btc': blockchairBtc,
+  'blockchain-info-balances': blockchainInfoBalances,
   'ethplorer-token-holders': ethplorerTokenHolders,
   'evm-curated-balances': evmCuratedBalances,
   'solana-largest-accounts': solanaLargestAccounts,

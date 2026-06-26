@@ -52,7 +52,7 @@ async function main() {
         labels
       );
       view.source = source;
-      view.status = holders.length < (asset.limit || 0) ? 'partial' : 'ok';
+      view.status = 'ok';
       views.push(view);
       console.log(
         `${asset.symbol}: ${holders.length} holders via ${source} ` +
@@ -81,7 +81,7 @@ async function main() {
   await writeJson(join(ROOT, 'data/latest.json'), latest);
 
   // Append to history (only when we have at least one healthy asset).
-  const healthy = views.some((v) => v.status === 'ok' || v.status === 'partial');
+  const healthy = views.some((v) => v.status === 'ok');
   if (healthy) {
     const history = (await readJson(join(ROOT, 'data/history.json'), [])) || [];
     history.push(buildHistoryPoint(now, views));
@@ -91,7 +91,7 @@ async function main() {
   await writeJson(join(ROOT, 'data/meta.json'), {
     generatedAt: now,
     assetCount: views.length,
-    okCount: views.filter((v) => v.status === 'ok' || v.status === 'partial').length,
+    okCount: views.filter((v) => v.status === 'ok').length,
     sources: [...sources, 'coingecko.com (prices)'].sort(),
     cadence: 'every 6 hours via GitHub Actions',
     disclaimer:

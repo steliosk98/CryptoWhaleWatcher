@@ -3,7 +3,7 @@
 // exits non-zero on any failure. Run: node scripts/selftest.mjs
 
 import assert from 'node:assert/strict';
-import { toUnits, normAddr, lookupLabel, hexToBig } from './lib/util.mjs';
+import { toUnits, normAddr, lookupLabel, hexToBig, chunk } from './lib/util.mjs';
 import {
   buildAssetView,
   prevAmountMap,
@@ -52,6 +52,11 @@ test('lookupLabel matches exact and lowercased', () => {
 test('shortenAddr truncates long, keeps short', () => {
   assert.equal(shortenAddr('0x1234567890abcdef1234'), '0x1234…ef1234');
   assert.equal(shortenAddr('short'), 'short');
+});
+
+test('chunk splits arrays correctly', () => {
+  assert.deepEqual(chunk([1, 2, 3, 4, 5], 2), [[1, 2], [3, 4], [5]]);
+  assert.deepEqual(chunk([], 3), []);
 });
 
 test('round respects decimal places', () => {

@@ -8,9 +8,17 @@
       "coingeckoId": "bitcoin",
       "decimals": 8,
       "explorerAddress": "https://mempool.space/address/",
-      "topSource": "blockchair-btc",
-      "limit": 100,
-      "curated": []
+      "topSource": "blockchain-info-balances",
+      "limit": 0,
+      "curated": [
+        "34xp4vRoCGJym3xR7yCVPFHoCNxv4Twseo",
+        "bc1qgdjqv0av3q56jvd82tkdjpy7gdp9ut8tlqmgrpmv24sq90ecnvqqjwvw97",
+        "1FeexV6bAHb8ybZjqQMjJrcCrHGW9sb6uF",
+        "3M219KR5vEneNb47ewrPfWyb5jQ2DjxRP6",
+        "bc1qm34lsc65zpw79lxes69zkqmk6ee3ewf0j77s3h",
+        "1P5ZEDWTKTFGxQjZphgWPQUpe554WKDfHQ",
+        "bc1qa5wkgaew2dkv56kfvj49j0av5nml45x9ek9hz6"
+      ]
     },
     {
       "symbol": "ETH",
