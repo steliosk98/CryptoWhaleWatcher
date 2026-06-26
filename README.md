@@ -49,7 +49,7 @@ step**.
 
 | Asset        | Source                                            |
 |--------------|---------------------------------------------------|
-| BTC          | [Blockchair](https://blockchair.com) rich list    |
+| BTC          | [blockchain.info](https://blockchain.info) balances of curated whale wallets |
 | ETH          | Public Ethereum JSON-RPC (`eth_getBalance`)       |
 | USDT / USDC  | [Ethplorer](https://ethplorer.io) top token holders (`freekey`) |
 | SOL          | Solana RPC `getLargestAccounts`                   |

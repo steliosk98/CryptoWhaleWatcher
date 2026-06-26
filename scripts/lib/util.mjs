@@ -56,6 +56,34 @@ export async function fetchJson(url, opts = {}) {
   throw lastErr;
 }
 
+/** fetch returning the raw text body (for endpoints that return plain numbers). */
+export async function fetchText(url, opts = {}) {
+  const { timeoutMs = 15000, retries = 1, retryDelayMs = 1000 } = opts;
+  let lastErr;
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+    try {
+      const res = await fetch(url, { headers: { 'user-agent': USER_AGENT }, signal: ctrl.signal });
+      clearTimeout(timer);
+      if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+      return await res.text();
+    } catch (err) {
+      clearTimeout(timer);
+      lastErr = err;
+      if (attempt < retries) await sleep(retryDelayMs * (attempt + 1));
+    }
+  }
+  throw lastErr;
+}
+
+/** Split an array into chunks of size n. */
+export function chunk(arr, n) {
+  const out = [];
+  for (let i = 0; i < arr.length; i += n) out.push(arr.slice(i, i + n));
+  return out;
+}
+
 /** Read JSON file, returning fallback if missing/unparseable. */
 export async function readJson(path, fallback = null) {
   try {
