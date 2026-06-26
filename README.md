@@ -31,6 +31,29 @@ it and host their own copy in minutes.
   tracked-value-by-asset bars, and a total-tracked-value history area chart.
 - **Per-asset history** — whale holdings vs exchange reserves over time.
 - **Biggest movers** — split into whale movers (signal) and exchange flows.
+- **Whale signals** — derived flow/trend indicators with a bullish/bearish lean
+  (see *Signals* below), plus a price chart coloured by daily whale flow.
+
+## Signals (informational, not advice)
+
+Once the daily archive accrues, each asset shows a **Signals** panel. Every
+signal is **regime-relative** (scored against its own recent history) and is
+**informational only — not financial advice**:
+
+| Signal | What it measures | Read |
+|--------|------------------|------|
+| **Exchange net-flow (7d)** | coins moving to/from exchange wallets | outflow → accumulation (bullish); inflow → sell pressure (bearish) |
+| **Whale accumulation** | size-weighted net change in non-exchange whale holdings, z-scored to 0–100 | >60 accumulating, <40 distributing |
+| **Exchange reserve trend** | 30-day change in coins held on exchanges | falling reserves = structurally bullish |
+| **Price vs whales (divergence)** | 7d price move vs whale positioning | price down + whales accumulating = bullish divergence (and vice-versa) |
+| **Stablecoin dry-powder** | tracked USDT+USDC value (market-wide) | rising = latent buy-side demand |
+
+**Caveats:** we track a curated *subset* of addresses (sample bias); balances
+aren't the full transaction graph, so flows are approximate; labels are
+best-effort; on-chain signals are probabilistic, lagging and regime-dependent.
+Whale-balance history is **forward-only** (free APIs can't backfill it), so the
+archive — and any future backtests — strengthen as data accumulates. Prices are
+backfilled ~1y for context.
 
 ## How it works
 
@@ -68,12 +91,17 @@ assets/css/style.css        # quant dark theme
 assets/js/app.js            # rendering + charts (no dependencies)
 config/assets.json          # which assets to track + how to source them
 config/labels.json          # address → entity label map
-scripts/fetch-data.mjs      # CI data fetcher (orchestrator)
-scripts/lib/*.mjs           # sources, transforms, utilities
+scripts/fetch-data.mjs      # CI data fetcher (intraday, every 6h)
+scripts/snapshot-daily.mjs  # EOD daily archive + series + signals (daily)
+scripts/backfill-prices.mjs # one-time ~1y daily price seed (CoinGecko)
+scripts/lib/*.mjs           # sources, transforms, signal math, utilities
 scripts/selftest.mjs        # offline unit tests for the pure logic
 scripts/validate.mjs        # JSON/shape validation (CI guard)
-data/*.json                 # generated snapshots (committed by CI)
-.github/workflows/          # CI (tests) + scheduled data refresh
+data/latest.json            # newest intraday snapshot
+data/daily/<date>.json      # immutable EOD archive per day
+data/series/overview.json   # compact long series (charts)
+data/signals.json           # computed signals
+.github/workflows/          # CI + 6h data refresh + daily snapshot
 ```
 
 ## Run / develop locally

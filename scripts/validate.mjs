@@ -40,6 +40,28 @@ if (history && !Array.isArray(history)) errors.push('data/history.json: must be 
 
 await parse('data/meta.json');
 
+// Optional daily-history artifacts (present once the daily workflow has run).
+async function parseIfExists(rel, check) {
+  const { readFile } = await import('node:fs/promises');
+  try {
+    await readFile(join(ROOT, rel), 'utf8');
+  } catch {
+    return; // not generated yet — fine
+  }
+  const v = await parse(rel);
+  if (v && check) check(v, rel);
+}
+
+await parseIfExists('data/series/overview.json', (v, rel) => {
+  if (!Array.isArray(v.rows)) errors.push(`${rel}: rows must be an array`);
+});
+await parseIfExists('data/signals.json', (v, rel) => {
+  if (typeof v.assets !== 'object') errors.push(`${rel}: assets must be an object`);
+});
+await parseIfExists('data/index.json', (v, rel) => {
+  if (!Array.isArray(v.days)) errors.push(`${rel}: days must be an array`);
+});
+
 if (errors.length) {
   console.error('VALIDATION FAILED:');
   for (const e of errors) console.error('  - ' + e);

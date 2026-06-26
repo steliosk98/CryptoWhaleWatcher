@@ -12,6 +12,7 @@ import {
   cohortOf,
   round,
 } from './lib/build.mjs';
+import { zscore, zToScore, pctChange, assetSignals, dryPowder } from './lib/signals.mjs';
 
 let passed = 0;
 function test(name, fn) {
@@ -122,6 +123,50 @@ test('buildHistoryPoint sums healthy assets only', () => {
   assert.equal(p.totalUsd, 20);
   assert.equal(p.assets.BTC.totalUsd, 20);
   assert.equal(p.assets.ETH, undefined);
+});
+
+test('zscore + zToScore behave', () => {
+  assert.equal(zscore(5, [1, 2, 3, 4, 5]), zscore(5, [1, 2, 3, 4, 5])); // deterministic
+  assert.equal(zToScore(0), 50);
+  assert.ok(zToScore(3) > 90 && zToScore(3) <= 100);
+  assert.ok(zToScore(-3) < 10 && zToScore(-3) >= 0);
+});
+
+test('pctChange handles zero / invalid', () => {
+  assert.equal(pctChange(110, 100), 10);
+  assert.equal(pctChange(90, 100), -10);
+  assert.equal(pctChange(1, 0), null);
+  assert.equal(pctChange(1, NaN), null);
+});
+
+test('assetSignals computes leans + divergence', () => {
+  // 8 days: exchange consistently OUTflowing (negative) -> bullish lean;
+  // whales accumulating (positive); price falling -> bullish divergence.
+  const rows = [];
+  for (let i = 0; i < 8; i++) {
+    rows.push({ date: `2026-01-0${i + 1}`, assets: { BTC: {
+      price: 100 - i * 2,                 // price falling
+      whaleUsd: 1000 + i * 10,
+      exchangeUsd: 2000 - i * 10,
+      exchangeNetFlowUsd: -50 - i,        // outflow
+      whaleNetFlowUsd: 40 + i,            // accumulation
+      exchangeReserveAmount: 500 - i,     // reserves falling
+    } } });
+  }
+  const s = assetSignals(rows, 'BTC');
+  assert.equal(s.exchangeLean, 'bullish');     // sustained outflow
+  assert.equal(s.whaleLean, 'bullish');        // accumulation
+  assert.equal(s.reserveLean, 'bullish');      // reserves falling
+  assert.equal(s.divergence, 'bullish');       // price down + whales accumulating
+  assert.ok(s.priceChange7dPct < 0);
+});
+
+test('dryPowder sums stablecoin reserves + 7d change', () => {
+  const mk = (u) => ({ assets: { USDT: { whaleUsd: u, exchangeUsd: u }, USDC: { whaleUsd: u, exchangeUsd: 0 } } });
+  const rows = [mk(100), mk(100), mk(100), mk(100), mk(100), mk(100), mk(100), mk(150)];
+  const dp = dryPowder(rows);
+  assert.equal(dp.usd, 450); // 150*2 (USDT w+e) + 150 (USDC w)
+  assert.ok(dp.change7dPct > 0);
 });
 
 console.log(`\n${passed} tests passed.`);

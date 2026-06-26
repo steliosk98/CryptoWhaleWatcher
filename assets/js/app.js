@@ -12,7 +12,8 @@
     exchange: { label: 'Exchanges', icon: '🏦', color: '#60a5fa', desc: 'custodial reserves — inflow = sell pressure, outflow = accumulation' },
     contract: { label: 'Contracts', icon: '📜', color: '#c4b5fd', desc: 'staking / bridge / protocol contracts — informational' },
   };
-  const state = { latest: null, history: [], meta: null, active: null, sort: {} };
+  const state = { latest: null, history: [], meta: null, active: null, sort: {}, signals: null, series: [] };
+  const LEAN_CLS = { bullish: 'pos', bearish: 'neg', neutral: 'muted' };
 
   // ---------- formatting ----------
   const fmtUsd = (n, opts = {}) => {
@@ -66,6 +67,9 @@
       state.latest = latest;
       state.meta = meta;
       state.history = await loadJson('data/history.json').catch(() => []);
+      state.signals = await loadJson('data/signals.json').catch(() => null);
+      const series = await loadJson('data/series/overview.json').catch(() => null);
+      state.series = series?.rows || [];
     } catch (err) {
       el('panel-container').innerHTML =
         `<div class="errbox">Could not load data (${esc(err.message)}). The first data refresh may still be running — check back shortly.</div>`;
@@ -175,6 +179,11 @@
           <div class="m"><div class="l">🏦 Exch. net flow</div><div class="v ${cls(-(c.exchange?.netFlowUsd || 0))}">${fmtUsd(c.exchange?.netFlowUsd, { signed: true })}</div><div class="s">${flowWord(c.exchange?.netFlowUsd, 'inflow', 'outflow')}</div></div>
           <div class="m"><div class="l">Tracked value</div><div class="v">${fmtUsd(a.aggregates.totalUsd)}</div><div class="s muted">${fmtNum(a.aggregates.totalAmount)} ${esc(a.symbol)}</div></div>
           <div class="m"><div class="l">Acc / Dist</div><div class="v"><span class="pos">${a.aggregates.accumulators}↑</span> <span class="muted">/</span> <span class="neg">${a.aggregates.distributors}↓</span></div><div class="s muted">this snapshot</div></div>
+        </div>
+        ${signalsPanel(a.symbol)}
+        <div class="chartbox">
+          <div class="ctitle">Price vs whale positioning — ${esc(a.symbol)} <span class="muted">(line coloured by daily whale flow: <span class="pos">green=accumulating</span>, <span class="neg">red=distributing</span>)</span></div>
+          ${priceWhaleChart(a.symbol)}
         </div>
         <div class="chartbox">
           <div class="ctitle">🐋 Whale holdings vs 🏦 exchange reserves — ${esc(a.symbol)} (history)</div>
@@ -290,6 +299,71 @@
   function renderFooter() {
     el('disclaimer').innerHTML = `<strong>Methodology.</strong> ${esc(state.meta?.disclaimer || '')}`;
     el('sources').innerHTML = (state.meta?.sources || []).map((s) => `<span class="s">${esc(s)}</span>`).join('');
+  }
+
+  // ---------- signals panel ----------
+  const leanWord = (l) => (l === 'bullish' ? 'Bullish' : l === 'bearish' ? 'Bearish' : 'Neutral');
+
+  function signalsPanel(sym) {
+    const s = state.signals?.assets?.[sym];
+    if (!s) {
+      return `<div class="signals"><div class="sig-head"><span class="pname">📈 Whale signals</span></div>
+        <div class="building" style="text-align:left;padding:14px 16px">Signals populate after the first daily snapshot (runs 00:10 UTC). They derive trend &amp; flow indicators from the day-over-day whale data.</div></div>`;
+    }
+    const dp = state.signals?.dryPowder;
+    const dryChip = dp ? `<span class="drychip">💵 Stablecoin dry powder: <b>${fmtUsd(dp.usd)}</b> ${dp.change7dPct != null ? `<span class="${cls(dp.change7dPct)}">${pct(dp.change7dPct)}</span> <span class="muted small">7d</span>` : ''}</span>` : '';
+
+    const tile = (label, valueHtml, lean, sub) => {
+      const lc = LEAN_CLS[lean] || 'muted';
+      return `<div class="sig">
+        <div class="sl">${label}</div>
+        <div class="sv ${lc}">${valueHtml}</div>
+        <div class="sb"><span class="leanbadge ${lc}">${leanWord(lean)}</span> <span class="muted small">${sub}</span></div>
+      </div>`;
+    };
+
+    const exFlow = tile('🏦 Exchange flow (7d)',
+      fmtUsd(s.exchangeNetFlow7dUsd, { signed: true }), s.exchangeLean,
+      (s.exchangeNetFlow7dUsd < 0 ? 'net outflow' : s.exchangeNetFlow7dUsd > 0 ? 'net inflow' : 'flat') + ' · out=accumulation');
+    const accScore = s.whaleAccumulationScore;
+    const acc = tile('🐋 Whale accumulation',
+      accScore == null ? '—' : `${accScore.toFixed(0)}<span class="muted" style="font-size:13px">/100</span>`,
+      s.whaleLean, 'size-weighted, vs recent norm');
+    const reserve = tile('🏦 Exch. reserve trend',
+      s.reserveChange30dPct == null ? '—' : pct(s.reserveChange30dPct), s.reserveLean, '30d reserves · falling=bullish');
+    const divLean = s.divergence === 'none' ? 'neutral' : s.divergence;
+    const div = tile('⚖️ Price vs whales',
+      s.divergence === 'none' ? 'Aligned' : leanWord(divLean) + ' div.', divLean,
+      s.priceChange7dPct != null ? `price ${pct(s.priceChange7dPct)} 7d` : 'divergence check');
+
+    return `<div class="signals">
+      <div class="sig-head"><span class="pname">📈 Whale signals</span><span class="muted small">informational, not financial advice</span><div class="spacer"></div>${dryChip}</div>
+      <div class="sigrid">${exFlow}${acc}${reserve}${div}</div>
+    </div>`;
+  }
+
+  // price line coloured per-segment by that day's whale net flow
+  function priceWhaleChart(sym) {
+    const pts = state.series
+      .map((r) => ({ price: num(r.assets?.[sym]?.price), flow: num(r.assets?.[sym]?.whaleNetFlowUsd) }))
+      .filter((p) => isFinite(p.price));
+    if (pts.length < 2) return buildingMsg();
+    const W = 600, h = 150, pad = 6;
+    const prices = pts.map((p) => p.price);
+    let min = Math.min(...prices), max = Math.max(...prices);
+    if (min === max) { min *= 0.999; max *= 1.001; }
+    const range = max - min || 1;
+    const x = (i) => pad + (i / (pts.length - 1)) * (W - 2 * pad);
+    const y = (v) => h - pad - ((v - min) / range) * (h - 2 * pad);
+    let segs = '';
+    for (let i = 1; i < pts.length; i++) {
+      const f = pts[i].flow;
+      const color = !isFinite(f) || f === 0 ? 'var(--text-mute)' : f > 0 ? 'var(--green)' : 'var(--red)';
+      segs += `<path d="M${x(i - 1).toFixed(1)},${y(pts[i - 1].price).toFixed(1)} L${x(i).toFixed(1)},${y(pts[i].price).toFixed(1)}" stroke="${color}" stroke-width="2" fill="none" stroke-linecap="round"/>`;
+    }
+    const lp = pts[pts.length - 1].price;
+    return `<div class="chart-ywrap"><span class="ymax">${fmtPrice(max)}</span><span class="ymin">${fmtPrice(min)}</span>
+      <svg class="spark" viewBox="0 0 ${W} ${h}" preserveAspectRatio="none">${segs}<circle cx="${x(pts.length - 1).toFixed(1)}" cy="${y(lp).toFixed(1)}" r="3" fill="var(--text)"/></svg></div>`;
   }
 
   // ================= charts (hand-rolled SVG) =================
