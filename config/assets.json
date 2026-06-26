@@ -74,9 +74,15 @@
       "coingeckoId": "solana",
       "decimals": 9,
       "explorerAddress": "https://solscan.io/account/",
-      "topSource": "solana-largest-accounts",
-      "limit": 20,
-      "curated": []
+      "topSource": "solana-curated-balances",
+      "limit": 0,
+      "minAmount": 1000,
+      "curated": [
+        "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM",
+        "5tzFkiKscXHK5ZXCGbXZxdw7gTjjD1mBwuoFbhUvuAi9",
+        "H8sMJSCQxfKiFTCfDR3DUMLPwcRbM61LGFJ8N4dK3WjS",
+        "GThUX1Atko4tqhN2NaiTazWSeFWMuiUvfFnyJyUghFMJ"
+      ]
     }
   ]
 }

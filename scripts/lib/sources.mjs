@@ -13,9 +13,8 @@ const EVM_RPCS = [
 ];
 
 const SOLANA_RPCS = [
-  'https://api.mainnet-beta.solana.com',
   'https://solana-rpc.publicnode.com',
-  'https://rpc.ankr.com/solana',
+  'https://api.mainnet-beta.solana.com',
 ];
 
 /**
@@ -107,37 +106,44 @@ export async function evmCuratedBalances(asset) {
   throw lastErr || new Error('all EVM RPC endpoints failed');
 }
 
-/** Solana: top accounts via getLargestAccounts RPC, trying several endpoints. */
-export async function solanaLargestAccounts(asset) {
-  let lastErr;
+/**
+ * Solana: balances of curated large/whale accounts. getLargestAccounts is
+ * disabled on every free public RPC, but getMultipleAccounts (and getBalance)
+ * are allowed, so we read the balances of a verified whale set instead.
+ */
+export async function solanaCuratedBalances(asset) {
+  const addrs = asset.curated || [];
+  if (!addrs.length) throw new Error(`no curated addresses for ${asset.symbol}`);
+  const min = asset.minAmount || 0;
+
   for (const rpc of SOLANA_RPCS) {
     try {
       const json = await fetchJson(rpc, {
         method: 'POST',
-        body: { jsonrpc: '2.0', id: 1, method: 'getLargestAccounts', params: [{ filter: 'circulating' }] },
+        body: { jsonrpc: '2.0', id: 1, method: 'getMultipleAccounts', params: [addrs, { encoding: 'base64' }] },
         timeoutMs: 25000,
         retries: 1,
       });
       if (json?.error) throw new Error(json.error.message || 'rpc error');
-      const rows = json?.result?.value || [];
-      const holders = rows
-        .map((r) => ({ address: r.address, amount: toUnits(r.lamports, asset.decimals) }))
-        .filter((h) => h.address && h.amount > 0)
-        .slice(0, asset.limit || 20);
-      if (!holders.length) throw new Error('empty result');
-      return { source: `Solana RPC getLargestAccounts (${new URL(rpc).host})`, holders };
-    } catch (err) {
-      lastErr = err;
+      const values = json?.result?.value || [];
+      const holders = values
+        .map((v, i) => ({ address: addrs[i], amount: toUnits(v?.lamports ?? 0, asset.decimals) }))
+        .filter((h) => h.amount >= min && h.amount > 0)
+        .sort((a, b) => b.amount - a.amount);
+      if (!holders.length) throw new Error('no SOL balances above threshold');
+      return { source: `Solana RPC getMultipleAccounts (${new URL(rpc).host})`, holders };
+    } catch {
+      /* try next endpoint */
     }
   }
-  throw lastErr || new Error('all Solana RPC endpoints failed');
+  throw new Error('all Solana RPC endpoints failed');
 }
 
 const STRATEGIES = {
   'blockchain-info-balances': blockchainInfoBalances,
   'ethplorer-token-holders': ethplorerTokenHolders,
   'evm-curated-balances': evmCuratedBalances,
-  'solana-largest-accounts': solanaLargestAccounts,
+  'solana-curated-balances': solanaCuratedBalances,
 };
 
 export async function fetchHolders(asset) {

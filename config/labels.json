@@ -16,6 +16,8 @@
     "0x4976a4a02f38326660d17bf34b431dc6e2eb2327": { "entity": "Binance", "label": "Binance", "type": "exchange" },
     "0x2910543af39aba0cd09dbb2d50200b3e800a63d2": { "entity": "Kraken", "label": "Kraken", "type": "exchange" },
     "0x40b38765696e3d5d8d9d834d8aad4bb6e418e489": { "entity": "Robinhood", "label": "Robinhood", "type": "exchange" },
-    "0x5a52e96bacdabb82fd05763e25335261b270efcb": { "entity": "Binance", "label": "Binance (cold)", "type": "exchange" }
+    "0x5a52e96bacdabb82fd05763e25335261b270efcb": { "entity": "Binance", "label": "Binance (cold)", "type": "exchange" },
+    "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM": { "entity": "Coinbase", "label": "Coinbase", "type": "exchange" },
+    "5tzFkiKscXHK5ZXCGbXZxdw7gTjjD1mBwuoFbhUvuAi9": { "entity": "Binance", "label": "Binance", "type": "exchange" }
   }
 }

@@ -52,7 +52,7 @@ step**.
 | BTC          | [blockchain.info](https://blockchain.info) balances of curated whale wallets |
 | ETH          | Public Ethereum JSON-RPC (`eth_getBalance`)       |
 | USDT / USDC  | [Ethplorer](https://ethplorer.io) top token holders (`freekey`) |
-| SOL          | Solana RPC `getLargestAccounts`                   |
+| SOL          | Solana RPC `getMultipleAccounts` (curated whale wallets) |
 | Prices       | [CoinGecko](https://coingecko.com) simple price   |
 
 ## Project layout
