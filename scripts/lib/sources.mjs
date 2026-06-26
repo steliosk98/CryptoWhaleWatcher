@@ -17,10 +17,18 @@ export async function blockchairBtc(asset) {
   const limit = Math.min(asset.limit || 100, 100);
   const url = `https://api.blockchair.com/bitcoin/addresses?limit=${limit}`;
   const json = await fetchJson(url, { timeoutMs: 25000 });
-  const rows = Array.isArray(json?.data) ? json.data : [];
+  // Blockchair's /addresses returns data either as an array of
+  // {address, balance} or as an object keyed by address -> balance.
+  const data = json?.data;
+  const rows = Array.isArray(data)
+    ? data
+    : data && typeof data === 'object'
+      ? Object.entries(data).map(([address, v]) => ({ address, balance: v?.balance ?? v }))
+      : [];
   const holders = rows
     .map((r) => ({ address: r.address, amount: toUnits(r.balance, asset.decimals) }))
-    .filter((h) => h.address && h.amount > 0);
+    .filter((h) => h.address && h.amount > 0)
+    .sort((a, b) => b.amount - a.amount);
   if (!holders.length) throw new Error('blockchair returned no BTC addresses');
   return { source: 'blockchair.com (BTC rich list)', holders };
 }

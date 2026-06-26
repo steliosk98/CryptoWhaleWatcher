@@ -31,7 +31,6 @@
     return n >= 10 ? '$' + n.toLocaleString('en-US', { maximumFractionDigits: 0 })
                    : '$' + n.toLocaleString('en-US', { maximumFractionDigits: 4 });
   };
-  const signed = (n) => (n > 0 ? '+' : '') + n;
   const pct = (n) => (n > 0 ? '+' : '') + (Number(n) || 0).toFixed(2) + '%';
   const cls = (n) => (n > 0 ? 'pos' : n < 0 ? 'neg' : 'muted');
   const timeAgo = (iso) => {
@@ -183,7 +182,7 @@
         <td class="l entity"><span class="name">${name}</span>${tag}${newFlag}<br>${addr}</td>
         <td>${fmtNum(h.amount)}</td>
         <td>${fmtUsd(h.usd)}</td>
-        <td class="${cls(h.delta)}">${h.isNew ? '<span class="muted">—</span>' : signed(fmtNum(h.delta))}</td>
+        <td class="${cls(h.delta)}">${h.isNew ? '<span class="muted">—</span>' : (h.delta > 0 ? '+' : '') + fmtNum(h.delta)}</td>
         <td class="${cls(h.deltaUsd)}">${h.isNew ? '<span class="muted">—</span>' : fmtUsd(h.deltaUsd, { signed: true })}${bar}</td>
         <td>${h.share != null ? h.share.toFixed(2) + '%' : '<span class="muted">—</span>'}</td>
       </tr>`;
