@@ -1,8 +1,8 @@
-/* Crypto Whale Watcher — dashboard frontend (zero dependencies).
-   "Financial Dashboard / Data-Dense BI" design system. Reads the JSON snapshots
-   from scripts/*.mjs and renders smart-money whales separated from exchange
-   reserves, with flow signals. Hand-rolled SVG charts with interactive
-   crosshair tooltips. All rendering is client-side over static files. */
+/* Crypto Whale Watcher — Mission Control frontend (zero dependencies).
+   Financial / quant command-center UI. Reads the JSON snapshots from
+   scripts/*.mjs: smart-money whales separated from exchange reserves, flow
+   signals, live ticker, pulse gauge, net-flow heatmap, activity log. All
+   rendering is client-side over static files. */
 (() => {
   'use strict';
 
@@ -13,6 +13,7 @@
     USDC: { glyph: '$', color: '#2775CA', text: '#ffffff' },
     SOL: { glyph: '◎', color: '#14F195', text: '#06281a' },
   };
+  const WHALE = '<span class="we" aria-hidden="true">🐋</span>';
   const COHORT = {
     whale: { label: 'Whales', icon: 'i-whale', color: 'var(--c-whale)', desc: 'individual / unknown large holders — directional signal' },
     exchange: { label: 'Exchanges', icon: 'i-bank', color: 'var(--c-exch)', desc: 'custodial reserves — inflow = sell pressure, outflow = accumulation' },
@@ -24,6 +25,7 @@
   // ---------- icons ----------
   const icon = (id, cls = 'ic') => `<svg class="${cls}" aria-hidden="true"><use href="#${id}"/></svg>`;
   const trendIc = (n) => (n > 0 ? icon('i-trend-up') : n < 0 ? icon('i-trend-down') : '');
+  const cohortMark = (key) => (key === 'whale' ? WHALE : icon(COHORT[key].icon));
   const assetChip = (sym) => {
     const a = ASSET[sym] || { glyph: '', color: 'var(--panel-2)', text: 'var(--text)' };
     return `<span class="achip" style="background:${a.color};color:${a.text}" aria-hidden="true">${a.glyph}</span>`;
@@ -89,22 +91,50 @@
     } catch (err) {
       el('panel-container').innerHTML =
         `<div class="errbox">Could not load data (${esc(err.message)}). The first data refresh may still be running — check back shortly.</div>`;
-      el('status-text').textContent = 'no data yet';
+      el('status-text').textContent = 'NO DATA';
       return;
     }
     state.active = live()[0]?.symbol || assets()[0]?.symbol;
-    renderStatus();
+    renderTicker();
+    renderCommandBar();
     renderKpis();
+    renderPulseGauge();
     renderOverview();
+    renderHeatmap();
     renderTabs();
     renderActive();
+    renderActivityLog();
     renderMovers();
     renderFooter();
+    setupKeys();
   }
 
-  function renderStatus() {
-    const t = state.latest?.generatedAt;
-    el('status-text').textContent = t ? `updated ${timeAgo(t)}` : 'live';
+  // ---------- ticker ----------
+  function renderTicker() {
+    const items = live().map((a) => ({ sym: a.symbol, price: a.priceUsd, ch: a.priceChange24h }));
+    if (!items.length) return;
+    const cell = (it) => `<span class="tk"><span class="tk-sym">${assetChip(it.sym)}${it.sym}</span><span class="tk-px">${fmtPrice(it.price)}</span><span class="tk-ch ${cls(it.ch)}">${trendIc(it.ch)}${pct(it.ch)}</span></span>`;
+    const seq = items.map(cell).join('');
+    el('ticker-track').innerHTML = seq + seq;
+  }
+
+  // ---------- command bar ----------
+  let clockTimer = null;
+  function renderCommandBar() {
+    const latest = state.latest;
+    const okAssets = assets().filter((a) => (a.holders || []).length && a.status !== 'error');
+    el('sources-online').textContent = `${okAssets.length}/${assets().length}`;
+    el('source-leds').innerHTML = assets().map((a) => {
+      const ok = (a.holders || []).length && a.status !== 'error';
+      const stale = a.status === 'stale';
+      const c = ok ? (stale ? 'led-warn' : 'led-on') : 'led-off';
+      return `<span class="led ${c}" title="${esc(a.symbol)}: ${esc(a.status || '?')}"></span>`;
+    }).join('');
+    el('updated').textContent = latest?.generatedAt ? timeAgo(latest.generatedAt) : '—';
+    el('status-text').textContent = 'LIVE';
+    if (clockTimer) clearInterval(clockTimer);
+    const tick = () => { el('clock').textContent = new Date().toISOString().slice(11, 19); };
+    tick(); clockTimer = setInterval(tick, 1000);
   }
 
   // ---------- KPIs ----------
@@ -112,60 +142,129 @@
     let totalUsd = 0, whaleFlow = 0, exFlow = 0, whales = 0, exch = 0;
     for (const a of assets()) {
       const ag = a.aggregates || {};
-      totalUsd += ag.totalUsd || 0;
-      whaleFlow += ag.whaleNetFlowUsd || 0;
-      exFlow += ag.exchangeNetFlowUsd || 0;
-      whales += ag.whaleCount || 0;
-      exch += ag.exchangeCount || 0;
+      totalUsd += ag.totalUsd || 0; whaleFlow += ag.whaleNetFlowUsd || 0; exFlow += ag.exchangeNetFlowUsd || 0;
+      whales += ag.whaleCount || 0; exch += ag.exchangeCount || 0;
     }
-    el('kpi-value').textContent = fmtUsd(totalUsd);
-    el('kpi-whaleflow').innerHTML = `<span class="${cls(whaleFlow)}">${trendIc(whaleFlow)} ${fmtUsd(whaleFlow, { signed: true })}</span>`;
-    el('kpi-whaleflow-sub').textContent = whaleFlow >= 0 ? 'net accumulation' : 'net distribution';
-    el('kpi-exflow').innerHTML = `<span class="${cls(-exFlow)}">${trendIc(exFlow)} ${fmtUsd(exFlow, { signed: true })}</span>`;
-    el('kpi-exflow-sub').textContent = exFlow > 0 ? 'reserves rising · sell pressure' : exFlow < 0 ? 'reserves falling · accumulation' : 'flat';
-    el('kpi-cohorts').innerHTML = `${whales} ${icon('i-whale')} <span class="faint">/</span> ${exch} ${icon('i-bank')}`;
+    const spark = state.history.map((p) => Number(p.totalUsd)).filter(Number.isFinite);
+    const cards = [
+      { label: 'Tracked value', ic: icon('i-layers', 'ic kpi-ic'), value: fmtUsd(totalUsd), sub: 'across all assets', spark },
+      { label: 'Whale net flow', ic: `<span class="kpi-ic-e">${WHALE}</span>`, value: `<span class="${cls(whaleFlow)} kpi-arrow">${trendIc(whaleFlow)} ${fmtUsd(whaleFlow, { signed: true })}</span>`, sub: whaleFlow >= 0 ? 'net accumulation' : 'net distribution' },
+      { label: 'Exchange net flow', ic: icon('i-bank', 'ic kpi-ic'), value: `<span class="${cls(-exFlow)} kpi-arrow">${trendIc(exFlow)} ${fmtUsd(exFlow, { signed: true })}</span>`, sub: exFlow > 0 ? 'reserves rising · sell pressure' : exFlow < 0 ? 'reserves falling · accumulation' : 'flat' },
+      { label: 'Tracked addresses', ic: icon('i-activity', 'ic kpi-ic'), value: `${whales} ${WHALE} <span class="faint">/</span> ${exch} ${icon('i-bank')}`, sub: 'whales / exchanges' },
+    ];
+    el('kpis').innerHTML = cards.map((c) => `<div class="kpi" data-stagger>
+      <div class="kpi-top"><span class="kpi-label">${esc(c.label)}</span>${c.ic}</div>
+      <div class="value tnum">${c.value}</div>
+      <div class="meta muted">${esc(c.sub)}</div>
+      ${c.spark && c.spark.length > 2 ? `<div class="kpi-spark">${miniSpark(c.spark)}</div>` : ''}
+    </div>`).join('');
   }
 
-  // ---------- overview ----------
+  function miniSpark(vals) {
+    const v = vals.slice(-48); const W = 120, H = 30, pad = 2;
+    let min = Math.min(...v), max = Math.max(...v); if (min === max) { min *= 0.999; max *= 1.001; }
+    const r = max - min || 1;
+    const x = (i) => pad + (i / (v.length - 1)) * (W - 2 * pad);
+    const y = (val) => H - pad - ((val - min) / r) * (H - 2 * pad);
+    const d = v.map((val, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(val).toFixed(1)}`).join(' ');
+    const up = v[v.length - 1] >= v[0]; const col = up ? 'var(--up)' : 'var(--down)';
+    const gid = 'ks' + (++chartSeq);
+    return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none"><defs><linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${col}" stop-opacity="0.3"/><stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient></defs><path d="${d} L${x(v.length - 1).toFixed(1)},${H} L${x(0).toFixed(1)},${H} Z" fill="url(#${gid})"/><path d="${d}" fill="none" stroke="${col}" stroke-width="1.5"/></svg>`;
+  }
+
+  // ---------- market pulse gauge ----------
+  function renderPulseGauge() {
+    let whaleFlow = 0, exFlow = 0, totVal = 0;
+    for (const a of assets()) { const ag = a.aggregates || {}; whaleFlow += ag.whaleNetFlowUsd || 0; exFlow += ag.exchangeNetFlowUsd || 0; totVal += ag.totalUsd || 0; }
+    const netBull = whaleFlow - exFlow; // whale accumulation + exchange outflow = bullish
+    const ratio = totVal ? netBull / totVal : 0;
+    const score = Math.round(50 + 48 * Math.tanh(ratio * 1500));
+    const zone = score >= 66 ? { l: 'Accumulation', c: 'var(--up)' } : score <= 34 ? { l: 'Distribution', c: 'var(--down)' } : { l: 'Neutral', c: 'var(--amber-400)' };
+
+    const cx = 100, cy = 100, r = 80;
+    const pol = (deg, rr = r) => [cx + rr * Math.cos(deg * Math.PI / 180), cy - rr * Math.sin(deg * Math.PI / 180)];
+    const arc = (d1, d2, color, w) => {
+      const [x1, y1] = pol(d1), [x2, y2] = pol(d2);
+      return `<path d="M${x1.toFixed(1)},${y1.toFixed(1)} A${r},${r} 0 0 1 ${x2.toFixed(1)},${y2.toFixed(1)}" fill="none" stroke="${color}" stroke-width="${w}" stroke-linecap="round"/>`;
+    };
+    const needleDeg = 180 - (score / 100) * 180;
+    const [nx, ny] = pol(needleDeg, r - 12);
+    const ticks = [0, 25, 50, 75, 100].map((p) => { const dg = 180 - (p / 100) * 180; const [a1, b1] = pol(dg, r + 3); const [a2, b2] = pol(dg, r + 9); return `<line x1="${a1.toFixed(1)}" y1="${b1.toFixed(1)}" x2="${a2.toFixed(1)}" y2="${b2.toFixed(1)}" stroke="var(--faint)" stroke-width="1"/>`; }).join('');
+
+    const svg = `<svg class="gauge-svg" viewBox="0 0 200 116" role="img" aria-label="Whale sentiment ${score} of 100, ${zone.l}">
+      ${arc(180, 120, 'var(--down)', 9)}${arc(120, 60, 'var(--amber-400)', 9)}${arc(60, 0, 'var(--up)', 9)}
+      ${ticks}
+      <line class="gauge-needle" x1="${cx}" y1="${cy}" x2="${nx.toFixed(1)}" y2="${ny.toFixed(1)}" stroke="${zone.c}" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="${cx}" cy="${cy}" r="6" fill="var(--panel)" stroke="${zone.c}" stroke-width="2.5"/>
+    </svg>`;
+
+    el('mc-pulse').innerHTML = `<div class="gauge-wrap">${svg}
+      <div class="gauge-read"><div class="gv" style="color:${zone.c}">${score}</div><div class="gl" style="color:${zone.c}">${zone.l}</div></div>
+      <div class="gauge-sub"><span>${WHALE} <b class="${cls(whaleFlow)}">${fmtUsd(whaleFlow, { signed: true })}</b></span><span>${icon('i-bank')} <b class="${cls(-exFlow)}">${fmtUsd(exFlow, { signed: true })}</b></span></div>
+      <div class="muted small" style="font-family:var(--mono);text-align:center">whale accumulation + exchange outflow → bullish bias</div></div>`;
+  }
+
+  // ---------- net-flow heatmap ----------
+  function renderHeatmap() {
+    const rows = live();
+    if (!rows.length) { el('mc-heatmap').innerHTML = buildingMsg(); return; }
+    const wMax = Math.max(1, ...rows.map((a) => Math.abs(a.aggregates?.whaleNetFlowUsd || 0)));
+    const eMax = Math.max(1, ...rows.map((a) => Math.abs(a.aggregates?.exchangeNetFlowUsd || 0)));
+    const cell = (val, max, invert) => {
+      const v = val || 0;
+      if (!v) return `<div class="hm-cell flat"><span class="hm-v">·</span></div>`;
+      const intensity = Math.min(1, Math.abs(v) / max);
+      const bull = invert ? v < 0 : v > 0;
+      const base = bull ? '34,197,94' : '239,68,68';
+      return `<div class="hm-cell ${bull ? 'pos' : 'neg'}" style="background:rgba(${base},${(0.12 + intensity * 0.5).toFixed(2)})"><span class="hm-v">${fmtUsd(v, { signed: true })}</span></div>`;
+    };
+    let html = `<div class="hm-h"></div><div class="hm-h">${WHALE} Whale</div><div class="hm-h">${icon('i-bank')} Exch.</div>`;
+    for (const a of rows) {
+      html += `<div class="hm-rl">${assetChip(a.symbol)}${a.symbol}</div>${cell(a.aggregates?.whaleNetFlowUsd, wMax, false)}${cell(a.aggregates?.exchangeNetFlowUsd, eMax, true)}`;
+    }
+    el('mc-heatmap').innerHTML = `<div class="heatmap">${html}</div>`;
+  }
+
+  // ---------- overview (donut / bars / history) ----------
   function renderOverview() {
     const tot = { whale: 0, exchange: 0, contract: 0 };
-    for (const a of assets()) {
-      tot.whale += a.cohorts?.whale?.usd || 0;
-      tot.exchange += a.cohorts?.exchange?.usd || 0;
-      tot.contract += a.cohorts?.contract?.usd || 0;
-    }
-    const segs = Object.keys(tot).filter((k) => tot[k] > 0)
-      .map((k) => ({ key: k, label: COHORT[k].label, icon: COHORT[k].icon, value: tot[k], color: COHORT[k].color }));
+    for (const a of assets()) { tot.whale += a.cohorts?.whale?.usd || 0; tot.exchange += a.cohorts?.exchange?.usd || 0; tot.contract += a.cohorts?.contract?.usd || 0; }
+    const segs = Object.keys(tot).filter((k) => tot[k] > 0).map((k) => ({ key: k, label: COHORT[k].label, value: tot[k], color: COHORT[k].color }));
     el('ov-composition').innerHTML = donut(segs);
 
-    const rows = live().map((a) => ({
-      sym: a.symbol, value: a.aggregates?.totalUsd || 0, color: ASSET[a.symbol]?.color || 'var(--primary)',
-    })).sort((x, y) => y.value - x.value);
+    const rows = live().map((a) => ({ sym: a.symbol, value: a.aggregates?.totalUsd || 0, color: ASSET[a.symbol]?.color || 'var(--primary)' })).sort((x, y) => y.value - x.value);
     el('ov-byasset').innerHTML = hbars(rows);
 
     const vals = state.history.map((p) => Number(p.totalUsd));
     const dates = state.history.map((p) => p.t);
-    el('ov-history').innerHTML = renderTimeChart({
-      dates, series: [{ label: 'Total tracked', color: 'var(--primary)', values: vals }], area: true, h: 156,
-    });
+    el('ov-history').innerHTML = renderTimeChart({ dates, series: [{ label: 'Total tracked', color: 'var(--primary)', values: vals }], area: true, h: 150 });
     const valid = vals.filter((v) => Number.isFinite(v) && v > 0).length;
     el('ov-hist-badge').textContent = valid >= 2 ? `${valid} snapshots` : 'building…';
-    wireCharts(el('overview'));
+    wireCharts(el('mc-grid'));
   }
 
   // ---------- tabs ----------
   function renderTabs() {
     const tabs = el('tabs');
     tabs.innerHTML = '';
-    for (const a of assets()) {
+    assets().forEach((a, idx) => {
       const t = document.createElement('button');
       t.className = 'tab' + (a.symbol === state.active ? ' active' : '');
       t.setAttribute('role', 'tab');
       t.setAttribute('aria-selected', a.symbol === state.active ? 'true' : 'false');
-      t.innerHTML = `${assetChip(a.symbol)}<span>${esc(a.symbol)}</span><span class="chip">${(a.holders || []).length}</span>`;
+      t.innerHTML = `${assetChip(a.symbol)}<span>${esc(a.symbol)}</span><span class="chip">${(a.holders || []).length}</span><span class="kbd">${idx + 1}</span>`;
       t.onclick = () => { state.active = a.symbol; state.sort = {}; renderTabs(); renderActive(); };
       tabs.appendChild(t);
-    }
+    });
+  }
+
+  function setupKeys() {
+    if (window.__wwKeys) return; window.__wwKeys = true;
+    document.addEventListener('keydown', (e) => {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const n = parseInt(e.key, 10);
+      if (n >= 1 && n <= 9) { const a = assets()[n - 1]; if (a) { state.active = a.symbol; state.sort = {}; renderTabs(); renderActive(); } }
+    });
   }
 
   // ---------- active asset panel ----------
@@ -175,7 +274,7 @@
     el('loading')?.remove();
     if (!a) { host.innerHTML = '<div class="errbox">No data for this asset.</div>'; return; }
     if (a.status === 'error' || !(a.holders || []).length) {
-      host.innerHTML = `<div class="panel"><div class="panel-head">${assetChip(a.symbol)}<span class="pname">${esc(a.name)}</span></div>`
+      host.innerHTML = `<div class="panel term"><div class="term-head"><span class="dots"><i></i><i></i><i></i></span>${assetChip(a.symbol)}<span class="pname">${esc(a.name)}</span></div>`
         + `<div class="errbox">This source is temporarily unavailable${a.error ? ` (${esc(a.error)})` : ''}. It will recover on the next refresh.</div></div>`;
       return;
     }
@@ -184,18 +283,18 @@
     const statusBadge = a.status && a.status !== 'ok' ? `<span class="badge" style="color:var(--amber-400)">${esc(a.status)}</span>` : '';
 
     host.innerHTML = `
-      <div class="panel" data-stagger>
-        <div class="panel-head">
+      <div class="panel term" data-stagger>
+        <div class="term-head">
+          <span class="dots"><i></i><i></i><i></i></span>
           ${assetChip(a.symbol)}
-          <span class="pname">${esc(a.name)} <span class="muted">${esc(a.symbol)}</span></span>
+          <span class="pname">${esc(a.name)} · ${esc(a.symbol)}</span>
           <span class="pprice">${fmtPrice(a.priceUsd)} <span class="${cls(a.priceChange24h)}">${trendIc(a.priceChange24h)} ${pct(a.priceChange24h)}</span></span>
-          <div class="spacer"></div>
+          <span class="term-tag" style="margin-left:auto">${esc(a.source || 'public API')}</span>
           ${statusBadge}
-          <span class="badge">${esc(a.source || 'public API')}</span>
         </div>
         <div class="metricrow six">
-          <div class="m"><div class="l">${icon('i-whale')} Whale holdings</div><div class="v">${fmtUsd(c.whale?.usd)}</div><div class="s muted">${c.whale?.count || 0} addrs</div></div>
-          <div class="m"><div class="l">${icon('i-whale')} Whale net flow</div><div class="v ${cls(c.whale?.netFlowUsd)}">${fmtUsd(c.whale?.netFlowUsd, { signed: true })}</div><div class="s">${flowWord(c.whale?.netFlowUsd, 'accumulating', 'distributing')}</div></div>
+          <div class="m"><div class="l">${WHALE} Whale holdings</div><div class="v">${fmtUsd(c.whale?.usd)}</div><div class="s muted">${c.whale?.count || 0} addrs</div></div>
+          <div class="m"><div class="l">${WHALE} Whale net flow</div><div class="v ${cls(c.whale?.netFlowUsd)}">${fmtUsd(c.whale?.netFlowUsd, { signed: true })}</div><div class="s">${flowWord(c.whale?.netFlowUsd, 'accumulating', 'distributing')}</div></div>
           <div class="m"><div class="l">${icon('i-bank')} Exch. reserves</div><div class="v">${fmtUsd(c.exchange?.usd)}</div><div class="s muted">${c.exchange?.count || 0} addrs</div></div>
           <div class="m"><div class="l">${icon('i-bank')} Exch. net flow</div><div class="v ${cls(-(c.exchange?.netFlowUsd || 0))}">${fmtUsd(c.exchange?.netFlowUsd, { signed: true })}</div><div class="s">${flowWord(c.exchange?.netFlowUsd, 'inflow', 'outflow')}</div></div>
           <div class="m"><div class="l">${icon('i-layers')} Tracked value</div><div class="v">${fmtUsd(a.aggregates.totalUsd)}</div><div class="s muted">${fmtNum(a.aggregates.totalAmount)} ${esc(a.symbol)}</div></div>
@@ -236,7 +335,7 @@
     const wrap = document.createElement('div');
     wrap.className = 'cohort';
     wrap.innerHTML = `<div class="sub-head" style="border-left-color:${meta.color}">
-        <svg class="ic" style="color:${meta.color}" aria-hidden="true"><use href="#${meta.icon}"/></svg><span class="pname">${meta.label}</span><span class="muted small">${esc(meta.desc)}</span>
+        ${cohortMark(cohort)}<span class="pname">${meta.label}</span><span class="muted small">${esc(meta.desc)}</span>
       </div><div class="tablewrap"></div>`;
     renderCohortTable(wrap.querySelector('.tablewrap'), a, cohort);
     return wrap;
@@ -300,23 +399,48 @@
     const dp = state.signals?.dryPowder;
     const dryChip = dp ? `<span class="drychip">${icon('i-fuel')} Stablecoin dry powder: <b>${fmtUsd(dp.usd)}</b> ${dp.change7dPct != null ? `<span class="${cls(dp.change7dPct)}">${pct(dp.change7dPct)}</span> <span class="muted small">7d</span>` : ''}</span>` : '';
 
-    const tile = (icId, label, valueHtml, lean, sub) => {
+    const tile = (mark, label, valueHtml, lean, sub) => {
       const lc = LEAN_CLS[lean] || 'muted';
-      return `<div class="sig"><div class="sl">${icon(icId)} ${label}</div><div class="sv ${lc}">${valueHtml}</div>
+      return `<div class="sig"><div class="sl">${mark} ${label}</div><div class="sv ${lc}">${valueHtml}</div>
         <div class="sb"><span class="leanbadge ${lc}">${leanIc(lean)}${leanWord(lean)}</span> <span class="muted small">${sub}</span></div></div>`;
     };
 
-    const exFlow = tile('i-bank', 'Exchange flow (7d)', fmtUsd(s.exchangeNetFlow7dUsd, { signed: true }), s.exchangeLean,
+    const exFlow = tile(icon('i-bank'), 'Exchange flow (7d)', fmtUsd(s.exchangeNetFlow7dUsd, { signed: true }), s.exchangeLean,
       (s.exchangeNetFlow7dUsd < 0 ? 'net outflow' : s.exchangeNetFlow7dUsd > 0 ? 'net inflow' : 'flat') + ' · out=accumulation');
     const accScore = s.whaleAccumulationScore;
-    const acc = tile('i-whale', 'Whale accumulation', accScore == null ? '—' : `${accScore.toFixed(0)}<span class="muted" style="font-size:13px">/100</span>`, s.whaleLean, 'size-weighted, vs recent norm');
-    const reserve = tile('i-bank', 'Exch. reserve trend', s.reserveChange30dPct == null ? '—' : pct(s.reserveChange30dPct), s.reserveLean, '30d reserves · falling=bullish');
+    const acc = tile(WHALE, 'Whale accumulation', accScore == null ? '—' : `${accScore.toFixed(0)}<span class="muted" style="font-size:13px">/100</span>`, s.whaleLean, 'size-weighted, vs recent norm');
+    const reserve = tile(icon('i-bank'), 'Exch. reserve trend', s.reserveChange30dPct == null ? '—' : pct(s.reserveChange30dPct), s.reserveLean, '30d reserves · falling=bullish');
     const divLean = s.divergence === 'none' ? 'neutral' : s.divergence;
-    const div = tile('i-scale', 'Price vs whales', s.divergence === 'none' ? 'Aligned' : leanWord(divLean) + ' div.', divLean,
+    const div = tile(icon('i-scale'), 'Price vs whales', s.divergence === 'none' ? 'Aligned' : leanWord(divLean) + ' div.', divLean,
       s.priceChange7dPct != null ? `price ${pct(s.priceChange7dPct)} 7d` : 'divergence check');
 
     return `<div class="signals"><div class="sig-head">${icon('i-activity')}<span class="pname">Whale signals</span><span class="muted small">informational, not financial advice</span><div class="spacer"></div>${dryChip}</div>
       <div class="sigrid">${exFlow}${acc}${reserve}${div}</div></div>`;
+  }
+
+  // ---------- activity log ----------
+  function renderActivityLog() {
+    const t = state.latest?.generatedAt;
+    const ts = t ? new Date(t).toISOString().slice(11, 16) : '--:--';
+    const lines = [];
+    const okC = assets().filter((a) => (a.holders || []).length && a.status !== 'error').length;
+    lines.push({ lvl: 'ok', tag: 'SYS', msg: `Snapshot ingested — <b>${okC}/${assets().length}</b> sources online` });
+    for (const a of assets()) {
+      if (a.status === 'stale') lines.push({ lvl: 'warn', tag: 'SRC', msg: `<b>${esc(a.symbol)}</b> source stale — showing last good data` });
+      if (a.status === 'error') lines.push({ lvl: 'warn', tag: 'SRC', msg: `<b>${esc(a.symbol)}</b> source offline (${esc(a.error || 'error')})` });
+    }
+    const moves = [];
+    for (const a of live()) for (const h of a.holders) { if (h.isNew || !h.deltaUsd) continue; moves.push({ sym: a.symbol, who: h.label || h.short, d: h.deltaUsd, cohort: h.cohort }); }
+    moves.sort((x, y) => Math.abs(y.d) - Math.abs(x.d));
+    for (const m of moves.slice(0, 8)) {
+      const lvl = m.cohort === 'exchange' ? (m.d < 0 ? 'acc' : 'dist') : (m.d > 0 ? 'acc' : 'dist');
+      const word = m.cohort === 'exchange' ? (m.d < 0 ? 'exchange outflow' : 'exchange inflow') : (m.d > 0 ? 'accumulation' : 'distribution');
+      lines.push({ lvl, tag: m.sym, msg: `<b>${esc(m.who)}</b> ${fmtUsd(m.d, { signed: true })} · ${word}` });
+    }
+    for (const a of live()) { const n = (a.holders || []).filter((h) => h.isNew).length; if (n) lines.push({ lvl: 'info', tag: a.symbol, msg: `<b>${n}</b> new top-holder${n > 1 ? 's' : ''} entered tracking` }); }
+    if (lines.length === 1) lines.push({ lvl: 'info', tag: 'SYS', msg: 'No notable movements this snapshot — whales holding steady' });
+
+    el('activity-log').innerHTML = lines.slice(0, 16).map((l) => `<li><span class="ts">${ts}</span><span class="lvl ${l.lvl}">${esc(l.tag)}</span><span class="msg">${l.msg}</span></li>`).join('');
   }
 
   // ---------- movers ----------
@@ -325,9 +449,8 @@
     for (const a of live()) {
       for (const h of a.holders) {
         if (h.isNew || !h.deltaUsd) continue;
-        const row = { sym: a.symbol, who: h.label || h.short, deltaUsd: h.deltaUsd };
-        if (h.cohort === 'exchange') exch.push(row);
-        else if (h.cohort !== 'contract') whales.push(row);
+        const r = { sym: a.symbol, who: h.label || h.short, deltaUsd: h.deltaUsd };
+        if (h.cohort === 'exchange') exch.push(r); else if (h.cohort !== 'contract') whales.push(r);
       }
     }
     if (!whales.length && !exch.length) { el('movers-panel').classList.add('hidden'); return; }
@@ -352,7 +475,6 @@
   let chartSeq = 0;
   const charts = new Map();
 
-  // unified time-series chart with gridlines, axis labels, crosshair tooltip.
   function renderTimeChart({ dates = [], series, area = false, h = 150, segColor = null }) {
     const drawn = series.filter((s) => s.draw !== false);
     const all = drawn.flatMap((s) => s.values).filter((v) => Number.isFinite(v));
@@ -394,7 +516,7 @@
     const hit = `<rect class="chart-hit" x="0" y="0" width="${W}" height="${H}" data-chart="${id}"/>`;
     charts.set(id, { W, H, pad, N, min, max, range, series, drawn, dates });
 
-    const fi = firstFiniteIdx(all.length ? series[0].values : []);
+    const fi = firstFiniteIdx(series[0] ? series[0].values : []);
     const xaxis = dates.length ? `<div class="xaxis"><span>${shortDate(dates[Math.max(0, fi)] || dates[0])}</span><span>${shortDate(dates[dates.length - 1])}</span></div>` : '';
     return `<div class="chart-ywrap"><span class="ymax">${fmtUsd(max)}</span><span class="ymin">${fmtUsd(min)}</span>
       <svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">${grid}${paths}${cursor}${hit}</svg></div>${xaxis}`;
@@ -418,17 +540,9 @@
         const i = Math.round(frac * (c.N - 1));
         const xv = xOf(i);
         cross.setAttribute('x1', xv); cross.setAttribute('x2', xv);
+        c.drawn.forEach((s, si) => { const v = s.values[i]; if (Number.isFinite(v)) { curs[si].setAttribute('cx', xv); curs[si].setAttribute('cy', yOf(v)); curs[si].setAttribute('opacity', '1'); } else curs[si].setAttribute('opacity', '0'); });
         let rows = '';
-        c.drawn.forEach((s, si) => {
-          const v = s.values[i];
-          if (Number.isFinite(v)) { curs[si].setAttribute('cx', xv); curs[si].setAttribute('cy', yOf(v)); curs[si].setAttribute('opacity', '1'); }
-          else curs[si].setAttribute('opacity', '0');
-        });
-        c.series.forEach((s) => {
-          const v = s.values[i];
-          const f = s.fmt || fmtUsd;
-          rows += `<div class="tt-row"><i style="background:${s.color}"></i>${esc(s.label)}: ${Number.isFinite(v) ? f(v) : '—'}</div>`;
-        });
+        c.series.forEach((s) => { const v = s.values[i]; const f = s.fmt || fmtUsd; rows += `<div class="tt-row"><i style="background:${s.color}"></i>${esc(s.label)}: ${Number.isFinite(v) ? f(v) : '—'}</div>`; });
         layer.setAttribute('opacity', '1');
         const d = c.dates && c.dates[i];
         tip.innerHTML = `${d ? `<div class="tt-date">${shortDate(d)}</div>` : ''}${rows}`;
@@ -461,13 +575,10 @@
     const flow = state.series.map((p) => num(p.assets?.[sym]?.whaleNetFlowUsd));
     if (price.filter(Number.isFinite).length < 2) return buildingMsg();
     const seg = (i) => { const f = flow[i]; return !Number.isFinite(f) || f === 0 ? 'var(--faint)' : f > 0 ? 'var(--up)' : 'var(--down)'; };
-    return renderTimeChart({
-      dates, h: 156, segColor: seg,
-      series: [
-        { label: 'Price', color: 'var(--data)', values: price, fmt: fmtPrice },
-        { label: 'Whale flow', color: 'var(--c-whale)', values: flow, fmt: (v) => fmtUsd(v, { signed: true }), draw: false },
-      ],
-    });
+    return renderTimeChart({ dates, h: 156, segColor: seg, series: [
+      { label: 'Price', color: 'var(--data)', values: price, fmt: fmtPrice },
+      { label: 'Whale flow', color: 'var(--c-whale)', values: flow, fmt: (v) => fmtUsd(v, { signed: true }), draw: false },
+    ] });
   }
 
   // donut
@@ -480,7 +591,7 @@
       const c = `<circle class="seg" r="15.915" cx="21" cy="21" fill="transparent" stroke="${s.color}" stroke-width="5" stroke-dasharray="${p.toFixed(2)} ${(100 - p).toFixed(2)}" stroke-dashoffset="${((100 - off) + 25).toFixed(2)}"></circle>`;
       off += p; return c;
     }).join('');
-    const legend = segs.map((s) => `<li><svg class="lic ic" style="color:${s.color}" aria-hidden="true"><use href="#${s.icon}"/></svg><span class="lname">${esc(s.label)}</span><span class="lval">${((s.value / total) * 100).toFixed(1)}% · ${fmtUsd(s.value)}</span></li>`).join('');
+    const legend = segs.map((s) => `<li>${s.key === 'whale' ? `<span class="lic we">🐋</span>` : `<svg class="lic ic" style="color:${s.color}" aria-hidden="true"><use href="#${COHORT[s.key].icon}"/></svg>`}<span class="lname">${esc(s.label)}</span><span class="lval">${((s.value / total) * 100).toFixed(1)}% · ${fmtUsd(s.value)}</span></li>`).join('');
     return `<div class="donutwrap"><svg viewBox="0 0 42 42" class="donut" role="img" aria-label="Holder composition by USD">
       <circle r="15.915" cx="21" cy="21" fill="transparent" stroke="var(--border)" stroke-width="5"></circle>${circles}
       <text x="21" y="20.5" class="dcenter">${fmtUsd(total)}</text><text x="21" y="25" class="dcsub">tracked</text></svg>

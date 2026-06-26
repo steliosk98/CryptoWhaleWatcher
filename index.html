@@ -3,25 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Crypto Whale Watcher — On-chain whale movement intelligence</title>
-  <meta name="description" content="A free, open-source quant-grade dashboard tracking the largest crypto whale addresses across BTC, ETH, stablecoins and Solana — separating smart-money whales from exchange reserves, with flow signals. Built on free public APIs." />
-  <meta property="og:title" content="Crypto Whale Watcher" />
-  <meta property="og:description" content="Track the biggest crypto whales across major chains. Smart-money vs exchange reserves, flow signals. Free & open source." />
+  <title>Crypto Whale Watcher — Mission Control</title>
+  <meta name="description" content="A free, open-source quant mission-control dashboard tracking the largest crypto whale addresses across BTC, ETH, stablecoins and Solana — smart-money whales vs exchange reserves, flow signals, live ticker. Built on free public APIs." />
+  <meta property="og:title" content="Crypto Whale Watcher — Mission Control" />
+  <meta property="og:description" content="Quant mission-control for on-chain whales. Smart-money vs exchange reserves, flow signals, live. Free & open source." />
   <meta property="og:type" content="website" />
-  <meta name="theme-color" content="#0B1120" />
+  <meta name="theme-color" content="#070B12" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Fira+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/style.css" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23F59E0B' d='M2.2 12.5c0-3.2 3-5.8 6.8-5.8 3 0 5.6 1.6 6.5 4l3.6-2.1c.6-.4 1.4.1 1.4.8v5.4c0 .7-.8 1.1-1.4.8l-3.6-2.1c-.9 2.3-3.5 3.9-6.5 3.9a8 8 0 0 1-3.8-.9c.7-.2 1.6-.8 1.9-2 .1-.3-.3-.5-.5-.3-.5.6-1.2.9-2 .9a4 4 0 0 1-.8-.1A5.3 5.3 0 0 1 2.2 12.5Z'/%3E%3C/svg%3E" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%90%8B%3C/text%3E%3C/svg%3E" />
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to dashboard</a>
 
-  <!-- Icon sprite (Lucide-derived, stroke 2). Hidden; referenced via <use>. -->
+  <!-- Icon sprite (Lucide-derived, stroke 2). Whale uses the 🐋 emoji per request. -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
     <defs>
-      <symbol id="i-whale" viewBox="0 0 24 24"><path fill="currentColor" d="M2.2 12.5c0-3.2 3-5.8 6.8-5.8 3 0 5.6 1.6 6.5 4l3.6-2.1c.6-.4 1.4.1 1.4.8v5.4c0 .7-.8 1.1-1.4.8l-3.6-2.1c-.9 2.3-3.5 3.9-6.5 3.9a8 8 0 0 1-3.8-.9c.7-.2 1.6-.8 1.9-2 .1-.3-.3-.5-.5-.3-.5.6-1.2.9-2 .9a4 4 0 0 1-.8-.1A5.3 5.3 0 0 1 2.2 12.5Z"/><circle cx="7" cy="11.4" r=".9" fill="#0B1120"/></symbol>
       <symbol id="i-bank" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></symbol>
       <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v5h5"/><path d="M8 13h8"/><path d="M8 17h6"/></symbol>
       <symbol id="i-activity" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol>
@@ -31,6 +30,9 @@
       <symbol id="i-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></symbol>
       <symbol id="i-bars" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="16"/></symbol>
       <symbol id="i-line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></symbol>
+      <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></symbol>
+      <symbol id="i-gauge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></symbol>
+      <symbol id="i-terminal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></symbol>
       <symbol id="i-trend-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></symbol>
       <symbol id="i-trend-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></symbol>
       <symbol id="i-ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></symbol>
@@ -38,17 +40,26 @@
     </defs>
   </svg>
 
-  <header class="topbar">
-    <div class="topbar-inner">
+  <!-- Live ticker tape -->
+  <div class="ticker" id="ticker" aria-label="Live asset ticker"><div class="ticker-track" id="ticker-track"></div></div>
+
+  <!-- Command bar -->
+  <header class="cmdbar">
+    <div class="cmdbar-inner">
       <a class="brand" href="./" aria-label="Crypto Whale Watcher home">
-        <span class="logo"><svg class="ic" aria-hidden="true"><use href="#i-whale"/></svg></span>
+        <span class="logo" aria-hidden="true">🐋</span>
         <span class="brand-txt">
           <span class="brand-name">Whale Watcher</span>
-          <span class="brand-sub">on-chain whale movement intelligence</span>
+          <span class="brand-sub">on-chain mission control</span>
         </span>
       </a>
+      <div class="cmd-status" id="cmd-status">
+        <span class="seg live"><span class="led led-on" aria-hidden="true"></span><span id="status-text">LIVE</span></span>
+        <span class="seg"><span class="k">UTC</span><span class="v tnum" id="clock">--:--:--</span></span>
+        <span class="seg"><span class="k">UPDATED</span><span class="v" id="updated">—</span></span>
+        <span class="seg"><span class="k">SOURCES</span><span class="v" id="sources-online">—</span><span class="leds" id="source-leds"></span></span>
+      </div>
       <div class="spacer"></div>
-      <span class="status-pill" id="status-pill"><span class="dot" aria-hidden="true"></span><span id="status-text">connecting…</span></span>
       <a class="ghlink" id="repo-link" href="https://github.com/steliosk98/CryptoWhaleWatcher" target="_blank" rel="noopener" aria-label="View source on GitHub">
         <svg class="ic" aria-hidden="true"><use href="#i-github"/></svg><span>GitHub</span>
       </a>
@@ -58,44 +69,31 @@
   <main class="wrap" id="main">
     <section class="hero">
       <h1>Follow the smart money. Watch the whales.</h1>
-      <p>Live snapshots of the largest known holder &amp; exchange addresses across major crypto assets — <strong>smart-money whales</strong> separated from <strong>exchange reserves</strong>, with accumulation &amp; flow signals. 100% free, open-source data — no account, no paywall.</p>
+      <p>Mission control for on-chain whales — <strong>smart-money whales</strong> separated from <strong>exchange reserves</strong> across major assets, with accumulation &amp; flow signals. 100% free, open-source data.</p>
     </section>
 
-    <section class="kpis" id="kpis" aria-label="Key metrics">
-      <div class="kpi" data-stagger>
-        <div class="kpi-top"><span class="kpi-label">Tracked value</span><svg class="ic kpi-ic" aria-hidden="true"><use href="#i-layers"/></svg></div>
-        <div class="value tnum" id="kpi-value">—</div>
-        <div class="meta muted" id="kpi-value-sub">across all assets</div>
-      </div>
-      <div class="kpi" data-stagger>
-        <div class="kpi-top"><span class="kpi-label">Whale net flow</span><svg class="ic kpi-ic" aria-hidden="true"><use href="#i-whale"/></svg></div>
-        <div class="value tnum" id="kpi-whaleflow">—</div>
-        <div class="meta muted" id="kpi-whaleflow-sub">smart-money signal</div>
-      </div>
-      <div class="kpi" data-stagger>
-        <div class="kpi-top"><span class="kpi-label">Exchange net flow</span><svg class="ic kpi-ic" aria-hidden="true"><use href="#i-bank"/></svg></div>
-        <div class="value tnum" id="kpi-exflow">—</div>
-        <div class="meta muted" id="kpi-exflow-sub">reserve change</div>
-      </div>
-      <div class="kpi" data-stagger>
-        <div class="kpi-top"><span class="kpi-label">Tracked addresses</span><svg class="ic kpi-ic" aria-hidden="true"><use href="#i-activity"/></svg></div>
-        <div class="value tnum" id="kpi-cohorts">—</div>
-        <div class="meta muted" id="kpi-cohorts-sub">whales / exchanges</div>
-      </div>
-    </section>
+    <section class="kpis" id="kpis" aria-label="Key metrics"></section>
 
-    <section class="overview" id="overview" aria-label="Cross-asset overview">
-      <div class="panel ov-card" data-stagger>
-        <div class="panel-head"><svg class="ic head-ic" aria-hidden="true"><use href="#i-layers"/></svg><span class="pname">Holder composition</span><span class="badge">by USD value</span></div>
-        <div class="ov-body" id="ov-composition"></div>
+    <section class="mc-grid" id="mc-grid" aria-label="Mission control panels">
+      <div class="panel term pulse-card" data-stagger>
+        <div class="term-head"><span class="dots"><i></i><i></i><i></i></span><svg class="ic" aria-hidden="true"><use href="#i-gauge"/></svg><span class="pname">MARKET PULSE</span><span class="term-tag">whale sentiment</span></div>
+        <div class="term-body" id="mc-pulse"></div>
       </div>
-      <div class="panel ov-card" data-stagger>
-        <div class="panel-head"><svg class="ic head-ic" aria-hidden="true"><use href="#i-bars"/></svg><span class="pname">Tracked value by asset</span></div>
-        <div class="ov-body" id="ov-byasset"></div>
+      <div class="panel term" data-stagger>
+        <div class="term-head"><span class="dots"><i></i><i></i><i></i></span><svg class="ic" aria-hidden="true"><use href="#i-layers"/></svg><span class="pname">HOLDER COMPOSITION</span><span class="term-tag">by USD</span></div>
+        <div class="term-body" id="ov-composition"></div>
       </div>
-      <div class="panel ov-card" data-stagger>
-        <div class="panel-head"><svg class="ic head-ic" aria-hidden="true"><use href="#i-line"/></svg><span class="pname">Total tracked value</span><span class="badge" id="ov-hist-badge">history</span></div>
-        <div class="ov-body" id="ov-history"></div>
+      <div class="panel term" data-stagger>
+        <div class="term-head"><span class="dots"><i></i><i></i><i></i></span><svg class="ic" aria-hidden="true"><use href="#i-grid"/></svg><span class="pname">NET-FLOW HEATMAP</span><span class="term-tag">since prev snapshot</span></div>
+        <div class="term-body" id="mc-heatmap"></div>
+      </div>
+      <div class="panel term" data-stagger>
+        <div class="term-head"><span class="dots"><i></i><i></i><i></i></span><svg class="ic" aria-hidden="true"><use href="#i-bars"/></svg><span class="pname">TRACKED VALUE BY ASSET</span></div>
+        <div class="term-body" id="ov-byasset"></div>
+      </div>
+      <div class="panel term span2" data-stagger>
+        <div class="term-head"><span class="dots"><i></i><i></i><i></i></span><svg class="ic" aria-hidden="true"><use href="#i-line"/></svg><span class="pname">TOTAL TRACKED VALUE</span><span class="term-tag" id="ov-hist-badge">history</span></div>
+        <div class="term-body" id="ov-history"></div>
       </div>
     </section>
 
@@ -110,31 +108,30 @@
       </div>
     </div>
 
-    <section class="panel hidden" id="movers-panel" aria-label="Biggest movers">
-      <div class="panel-head"><svg class="ic head-ic" aria-hidden="true"><use href="#i-zap"/></svg><span class="pname">Biggest movers</span><span class="badge">since previous snapshot</span></div>
-      <div class="movers">
-        <div>
-          <div class="sub-head"><svg class="ic" aria-hidden="true"><use href="#i-whale"/></svg><span class="pname">Whale movers</span><span class="muted small">directional signal</span></div>
-          <ul class="mlist" id="movers-whales"></ul>
-        </div>
-        <div>
-          <div class="sub-head"><svg class="ic" aria-hidden="true"><use href="#i-bank"/></svg><span class="pname">Exchange flows</span><span class="muted small">in = sell pressure · out = accumulation</span></div>
-          <ul class="mlist" id="movers-exchanges"></ul>
+    <section class="mc-bottom">
+      <div class="panel term" id="log-panel" data-stagger>
+        <div class="term-head"><span class="dots"><i></i><i></i><i></i></span><svg class="ic" aria-hidden="true"><use href="#i-terminal"/></svg><span class="pname">ACTIVITY LOG</span><span class="term-tag">latest snapshot</span></div>
+        <ul class="logfeed" id="activity-log"></ul>
+      </div>
+      <div class="panel term hidden" id="movers-panel">
+        <div class="term-head"><span class="dots"><i></i><i></i><i></i></span><svg class="ic" aria-hidden="true"><use href="#i-zap"/></svg><span class="pname">BIGGEST MOVERS</span></div>
+        <div class="movers">
+          <div>
+            <div class="sub-head"><span class="we" aria-hidden="true">🐋</span><span class="pname">Whale movers</span><span class="muted small">directional signal</span></div>
+            <ul class="mlist" id="movers-whales"></ul>
+          </div>
+          <div>
+            <div class="sub-head"><svg class="ic" aria-hidden="true"><use href="#i-bank"/></svg><span class="pname">Exchange flows</span><span class="muted small">in = sell · out = accumulate</span></div>
+            <ul class="mlist" id="movers-exchanges"></ul>
+          </div>
         </div>
       </div>
     </section>
 
     <footer class="foot">
       <div class="disc" id="disclaimer">—</div>
-      <div class="foot-sources">
-        <span class="muted">Auto-refreshed via GitHub Actions · sources:</span>
-        <div class="srcs" id="sources"></div>
-      </div>
-      <p class="foot-legal">
-        Open source under MIT ·
-        <a id="repo-link2" href="https://github.com/steliosk98/CryptoWhaleWatcher" target="_blank" rel="noopener">view code &amp; contribute</a>
-        · Informational only — not financial advice.
-      </p>
+      <div class="foot-sources"><span class="muted">Auto-refreshed via GitHub Actions · sources:</span><div class="srcs" id="sources"></div></div>
+      <p class="foot-legal">Open source under MIT · <a id="repo-link2" href="https://github.com/steliosk98/CryptoWhaleWatcher" target="_blank" rel="noopener">view code &amp; contribute</a> · Informational only — not financial advice.</p>
     </footer>
   </main>
 

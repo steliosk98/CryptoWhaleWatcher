@@ -365,8 +365,131 @@ table.holders tbody tr:hover td { background: rgba(245, 158, 11, 0.045); }
   .brand-sub { display: none; }
 }
 
+/* ============================================================================
+   MISSION CONTROL layer — ticker, command bar, terminal panels, gauge, heatmap,
+   activity log. Builds on the tokens above.
+   ========================================================================== */
+:root { --mc-line: rgba(148, 163, 184, 0.06); }
+
+body {
+  background:
+    linear-gradient(var(--mc-line) 1px, transparent 1px) 0 0 / 100% 34px,
+    linear-gradient(90deg, var(--mc-line) 1px, transparent 1px) 0 0 / 34px 100%,
+    radial-gradient(1100px 540px at 90% -10%, rgba(245, 158, 11, 0.08), transparent 60%),
+    radial-gradient(900px 520px at -8% -6%, rgba(139, 92, 246, 0.08), transparent 58%),
+    var(--navy-950);
+}
+
+/* ---- ticker tape ---- */
+.ticker { position: relative; overflow: hidden; background: var(--navy-950); border-bottom: 1px solid var(--border); height: 34px; display: flex; align-items: center; }
+.ticker::before, .ticker::after { content: ""; position: absolute; top: 0; bottom: 0; width: 60px; z-index: 2; pointer-events: none; }
+.ticker::before { left: 0; background: linear-gradient(90deg, var(--navy-950), transparent); }
+.ticker::after { right: 0; background: linear-gradient(270deg, var(--navy-950), transparent); }
+.ticker-track { display: inline-flex; gap: 0; white-space: nowrap; will-change: transform; animation: ticker 60s linear infinite; }
+.ticker:hover .ticker-track { animation-play-state: paused; }
+.tk { display: inline-flex; align-items: center; gap: 8px; padding: 0 var(--s5); font-family: var(--mono); font-size: 12px; border-right: 1px solid var(--border); }
+.tk .tk-sym { color: var(--text); font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
+.tk .tk-px { color: var(--text-2); }
+.tk .tk-ch { font-weight: 600; display: inline-flex; align-items: center; gap: 2px; }
+.tk .tk-ch .ic { width: 11px; height: 11px; }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ---- command bar ---- */
+.cmdbar { position: sticky; top: 0; z-index: 30; background: linear-gradient(180deg, rgba(7, 11, 18, 0.96), rgba(7, 11, 18, 0.78)); backdrop-filter: blur(12px) saturate(120%); border-bottom: 1px solid var(--border-strong); }
+.cmdbar-inner { max-width: 1280px; margin: 0 auto; padding: var(--s3) var(--s6); display: flex; align-items: center; gap: var(--s5); }
+.cmd-status { display: flex; align-items: center; gap: var(--s4); flex-wrap: wrap; }
+.cmd-status .seg { display: inline-flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 11px; padding: 4px 11px; border: 1px solid var(--border); border-radius: var(--r-sm); background: rgba(15, 22, 38, 0.6); }
+.cmd-status .seg .k { color: var(--faint); letter-spacing: 0.1em; }
+.cmd-status .seg .v { color: var(--text); }
+.cmd-status .seg.live { color: var(--up); border-color: rgba(34, 197, 94, 0.3); }
+.led { width: 7px; height: 7px; border-radius: 50%; background: var(--faint); flex: none; }
+.led-on { background: var(--up); box-shadow: 0 0 6px var(--up); animation: blink 2.6s infinite; }
+.led-warn { background: var(--amber-400); box-shadow: 0 0 6px var(--amber-400); }
+.led-off { background: var(--down); box-shadow: 0 0 6px var(--down); }
+.leds { display: inline-flex; gap: 4px; margin-left: 4px; }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
+
+/* ---- terminal panels ---- */
+.term { background: linear-gradient(180deg, var(--panel), var(--surface)); }
+.term-head { display: flex; align-items: center; gap: var(--s3); padding: 10px var(--s4); border-bottom: 1px solid var(--border); background: var(--navy-850); }
+.term-head .dots { display: inline-flex; gap: 5px; margin-right: 2px; }
+.term-head .dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--border-strong); }
+.term-head .dots i:nth-child(1) { background: #f56; } .term-head .dots i:nth-child(2) { background: var(--amber-400); } .term-head .dots i:nth-child(3) { background: var(--up); }
+.term-head .ic { width: 15px; height: 15px; color: var(--primary); }
+.term-head .pname { font-family: var(--mono); font-weight: 600; font-size: 12px; letter-spacing: 0.08em; }
+.term-head .term-tag { margin-left: auto; font-family: var(--mono); font-size: 10px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.08em; border: 1px solid var(--border); border-radius: var(--r-pill); padding: 2px 9px; }
+.term-body { padding: var(--s5); }
+
+/* ---- mission-control bento grid ---- */
+.mc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s4); margin: var(--s2) 0 var(--s2); }
+.mc-grid .span2 { grid-column: span 2; }
+.mc-grid .term { border-radius: var(--r); border: 1px solid var(--border); box-shadow: var(--sh-2); overflow: hidden; display: flex; flex-direction: column; }
+.mc-grid .term-body { flex: 1; display: flex; align-items: center; }
+.mc-grid .term-body > * { width: 100%; }
+
+/* ---- market pulse gauge ---- */
+.gauge-wrap { display: flex; flex-direction: column; align-items: center; gap: var(--s2); width: 100%; }
+.gauge-svg { width: 100%; max-width: 260px; height: auto; }
+.gauge-needle { transition: transform 0.8s var(--ease); transform-origin: 100px 100px; }
+.gauge-read { text-align: center; }
+.gauge-read .gv { font-family: var(--mono); font-size: 30px; font-weight: 700; line-height: 1; }
+.gauge-read .gl { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; margin-top: 4px; }
+.gauge-sub { display: flex; gap: var(--s4); font-family: var(--mono); font-size: 11px; color: var(--muted); flex-wrap: wrap; justify-content: center; }
+.gauge-sub b { color: var(--text); }
+
+/* ---- heatmap ---- */
+.heatmap { width: 100%; display: grid; grid-template-columns: 56px 1fr 1fr; gap: 5px; }
+.hm-h { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--faint); padding: 2px 4px; display: flex; align-items: center; gap: 4px; }
+.hm-h .ic { width: 12px; height: 12px; }
+.hm-rl { display: flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 12px; color: var(--text-2); }
+.hm-cell { font-family: var(--mono); font-size: 12px; font-weight: 600; text-align: right; padding: 9px 11px; border-radius: var(--r-sm); border: 1px solid var(--border); position: relative; overflow: hidden; }
+.hm-cell .hm-v { position: relative; z-index: 1; }
+.hm-cell.flat { color: var(--faint); }
+
+/* ---- KPI sparkline ---- */
+.kpi .kpi-spark { margin-top: var(--s3); height: 30px; }
+.kpi .kpi-spark svg { width: 100%; height: 30px; display: block; }
+.kpi-arrow .ic { width: 0.78em; height: 0.78em; }
+.kpi .value .ic { width: 0.7em; height: 0.7em; }
+
+/* ---- whale emoji + misc ---- */
+.we { font-style: normal; line-height: 1; display: inline-block; vertical-align: -0.06em; }
+.kpi-ic-e { font-size: 15px; opacity: 0.92; }
+.kpi .value .we { font-size: 0.7em; }
+.tab .kbd { font-family: var(--mono); font-size: 9px; color: var(--faint); border: 1px solid var(--border); border-radius: 4px; padding: 0 4px; margin-left: 2px; }
+.dlegend .lic.we { font-size: 13px; width: auto; height: auto; }
+.gauge-sub .we { font-size: 12px; }
+
+/* ---- activity log console ---- */
+.mc-bottom { display: grid; grid-template-columns: 1.15fr 1fr; gap: var(--s4); margin-top: var(--s4); }
+.mc-bottom .term { border-radius: var(--r); border: 1px solid var(--border); box-shadow: var(--sh-2); overflow: hidden; }
+.logfeed { list-style: none; margin: 0; padding: var(--s2) 0; max-height: 360px; overflow-y: auto; }
+.logfeed li { display: flex; align-items: baseline; gap: var(--s3); padding: 6px var(--s5); font-family: var(--mono); font-size: 12px; border-bottom: 1px solid rgba(30, 42, 64, 0.45); }
+.logfeed li:last-child { border-bottom: none; }
+.logfeed .ts { color: var(--faint); flex: none; }
+.logfeed .lvl { flex: none; font-weight: 600; }
+.logfeed .lvl.ok { color: var(--up); } .logfeed .lvl.warn { color: var(--amber-400); } .logfeed .lvl.info { color: var(--c-exch); } .logfeed .lvl.acc { color: var(--up); } .logfeed .lvl.dist { color: var(--down); }
+.logfeed .msg { color: var(--text-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.logfeed .msg b { color: var(--text); }
+
+/* compact hero for mission control */
+.hero { padding: var(--s6) 0 var(--s1); }
+.hero h1 { font-size: 23px; }
+
+@media (max-width: 1040px) {
+  .mc-grid { grid-template-columns: repeat(2, 1fr); }
+  .mc-grid .span2 { grid-column: span 2; }
+  .mc-bottom { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .mc-grid { grid-template-columns: 1fr; }
+  .mc-grid .span2 { grid-column: span 1; }
+  .cmd-status { display: none; }
+}
+
 /* respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
-  .dot { animation: none; }
+  .dot, .led-on { animation: none; }
+  .ticker-track { animation: none; transform: none; }
 }
