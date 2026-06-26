@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-26T08:36:54.316Z",
+  "generatedAt": "2026-06-26T08:37:40.157Z",
   "assets": [
     {
       "symbol": "BTC",
@@ -84,14 +84,14 @@
           "rank": 6,
           "address": "bc1qm34lsc65zpw79lxes69zkqmk6ee3ewf0j77s3h",
           "short": "bc1qm3…j77s3h",
-          "amount": 15942.5781,
-          "usd": 958212712.02,
+          "amount": 16847.9309,
+          "usd": 1012628036.36,
           "label": "OKX",
           "entity": "OKX",
           "type": "exchange",
           "share": null,
-          "delta": -14.2109,
-          "deltaUsd": -854134.04,
+          "delta": 905.3528,
+          "deltaUsd": 54415322.24,
           "isNew": false
         },
         {
@@ -111,12 +111,12 @@
       ],
       "aggregates": {
         "holderCount": 7,
-        "totalAmount": 718812.02,
-        "totalUsd": 43203477542,
-        "netFlowAmount": -14.21,
-        "netFlowUsd": -854132,
-        "accumulators": 0,
-        "distributors": 1
+        "totalAmount": 719717.37,
+        "totalUsd": 43257892867,
+        "netFlowAmount": 905.35,
+        "netFlowUsd": 54415325,
+        "accumulators": 1,
+        "distributors": 0
       },
       "source": "blockchain.info (curated BTC whales)",
       "status": "ok"
@@ -190,56 +190,56 @@
           "rank": 5,
           "address": "0x28C6c06298d514Db089934071355E5743bf21d60",
           "short": "0x28C6…f21d60",
-          "amount": 392173.8286,
-          "usd": 614097154.78,
+          "amount": 392173.8276,
+          "usd": 614097153.18,
           "label": "Binance 14",
           "entity": "Binance",
           "type": "exchange",
           "share": null,
-          "delta": 1003.0732,
-          "deltaUsd": 1570692.31,
+          "delta": -0.001,
+          "deltaUsd": -1.55,
           "isNew": false
         },
         {
           "rank": 6,
           "address": "0x4976A4A02f38326660D17bf34b431dC6e2eb2327",
           "short": "0x4976…eb2327",
-          "amount": 22093.6899,
-          "usd": 34596067.08,
+          "amount": 22072.1351,
+          "usd": 34562314.96,
           "label": "Binance",
           "entity": "Binance",
           "type": "exchange",
           "share": null,
-          "delta": -7.5463,
-          "deltaUsd": -11816.66,
+          "delta": -21.5548,
+          "deltaUsd": -33752.18,
           "isNew": false
         },
         {
           "rank": 7,
           "address": "0x9696f59E4d72E237BE84fFD425DCaD154Bf96976",
           "short": "0x9696…f96976",
-          "amount": 20893.6799,
-          "usd": 32716995.52,
+          "amount": 20889.1393,
+          "usd": 32709885.39,
           "label": "Binance",
           "entity": "Binance",
           "type": "exchange",
           "share": null,
-          "delta": -7.3446,
-          "deltaUsd": -11500.72,
+          "delta": -4.5406,
+          "deltaUsd": -7110.09,
           "isNew": false
         },
         {
           "rank": 8,
           "address": "0xDFd5293D8e347dFe59E90eFd55b2956a1343963d",
           "short": "0xDFd5…43963d",
-          "amount": 14353.2958,
-          "usd": 22475538.83,
+          "amount": 14352.9745,
+          "usd": 22475035.69,
           "label": "Binance 16",
           "entity": "Binance",
           "type": "exchange",
           "share": null,
-          "delta": -5.9846,
-          "deltaUsd": -9371.17,
+          "delta": -0.3213,
+          "deltaUsd": -503.14,
           "isNew": false
         },
         {
@@ -260,14 +260,14 @@
           "rank": 10,
           "address": "0x21a31Ee1afC51d94C2eFcCAa2092aD1028285549",
           "short": "0x21a3…285549",
-          "amount": 11618.4396,
-          "usd": 18193082.13,
+          "amount": 11617.6572,
+          "usd": 18191857.06,
           "label": "Binance 15",
           "entity": "Binance",
           "type": "exchange",
           "share": null,
-          "delta": -8.0205,
-          "deltaUsd": -12559.21,
+          "delta": -0.7824,
+          "deltaUsd": -1225.14,
           "isNew": false
         },
         {
@@ -287,12 +287,12 @@
       ],
       "aggregates": {
         "holderCount": 11,
-        "totalAmount": 91776810.87,
-        "totalUsd": 143711472610,
-        "netFlowAmount": 974.18,
-        "netFlowUsd": 1525445,
-        "accumulators": 1,
-        "distributors": 4
+        "totalAmount": 91776783.67,
+        "totalUsd": 143711430018,
+        "netFlowAmount": -27.2,
+        "netFlowUsd": -42592,
+        "accumulators": 0,
+        "distributors": 5
       },
       "source": "public JSON-RPC (ethereum-rpc.publicnode.com)",
       "status": "ok"
@@ -386,8 +386,8 @@
           "entity": null,
           "type": "unknown",
           "share": 3.77,
-          "delta": -2823.1933,
-          "deltaUsd": -2819.03,
+          "delta": 0,
+          "deltaUsd": 0,
           "isNew": false
         },
         {
@@ -414,8 +414,8 @@
           "entity": null,
           "type": "unknown",
           "share": 0.73,
-          "delta": 238559.9775,
-          "deltaUsd": 238207.86,
+          "delta": 0,
+          "deltaUsd": 0,
           "isNew": false
         },
         {
@@ -470,8 +470,8 @@
           "entity": "Binance",
           "type": "exchange",
           "share": 0.53,
-          "delta": 35304.4978,
-          "deltaUsd": 35252.39,
+          "delta": 0,
+          "deltaUsd": 0,
           "isNew": false
         },
         {
@@ -1002,8 +1002,8 @@
           "entity": null,
           "type": "unknown",
           "share": 0.2,
-          "delta": 2436846.5765,
-          "deltaUsd": 2433249.79,
+          "delta": 0,
+          "deltaUsd": 0,
           "isNew": false
         },
         {
@@ -1030,8 +1030,8 @@
           "entity": null,
           "type": "unknown",
           "share": 0.19,
-          "delta": 37656.6487,
-          "deltaUsd": 37601.07,
+          "delta": 0,
+          "deltaUsd": 0,
           "isNew": false
         },
         {
@@ -1114,8 +1114,8 @@
           "entity": null,
           "type": "unknown",
           "share": 0.15,
-          "delta": -130952.8321,
-          "deltaUsd": -130759.55,
+          "delta": 0,
+          "deltaUsd": 0,
           "isNew": false
         },
         {
@@ -1184,8 +1184,8 @@
           "entity": null,
           "type": "unknown",
           "share": 0.12,
-          "delta": 29967.123,
-          "deltaUsd": 29922.89,
+          "delta": 0,
+          "deltaUsd": 0,
           "isNew": false
         },
         {
@@ -1198,8 +1198,8 @@
           "entity": null,
           "type": "unknown",
           "share": 0.11,
-          "delta": 558413.4865,
-          "deltaUsd": 557589.27,
+          "delta": 0,
+          "deltaUsd": 0,
           "isNew": false
         },
         {
@@ -1240,8 +1240,8 @@
           "entity": null,
           "type": "unknown",
           "share": 0.1,
-          "delta": -2416665.1969,
-          "deltaUsd": -2413098.2,
+          "delta": 0,
+          "deltaUsd": 0,
           "isNew": false
         },
         {
@@ -1254,8 +1254,8 @@
           "entity": null,
           "type": "unknown",
           "share": 0.1,
-          "delta": 293.4662,
-          "deltaUsd": 293.03,
+          "delta": 0,
+          "deltaUsd": 0,
           "isNew": false
         },
         {
@@ -1268,8 +1268,8 @@
           "entity": null,
           "type": "unknown",
           "share": 0.1,
-          "delta": -335298.0235,
-          "deltaUsd": -334803.12,
+          "delta": 0,
+          "deltaUsd": 0,
           "isNew": false
         },
         {
@@ -1464,8 +1464,8 @@
           "entity": "Binance",
           "type": "exchange",
           "share": 0.08,
-          "delta": -519414.2895,
-          "deltaUsd": -518647.63,
+          "delta": 0,
+          "deltaUsd": 0,
           "isNew": false
         },
         {
@@ -1478,8 +1478,8 @@
           "entity": "Binance",
           "type": "exchange",
           "share": 0.08,
-          "delta": -56581.8296,
-          "deltaUsd": -56498.31,
+          "delta": 0,
+          "deltaUsd": 0,
           "isNew": false
         },
         {
@@ -1520,8 +1520,8 @@
           "entity": null,
           "type": "unknown",
           "share": 0.07,
-          "delta": -20181.3796,
-          "deltaUsd": -20151.59,
+          "delta": 0,
+          "deltaUsd": 0,
           "isNew": false
         },
         {
@@ -1548,8 +1548,8 @@
           "entity": "Binance",
           "type": "exchange",
           "share": 0.07,
-          "delta": -4128.598,
-          "deltaUsd": -4122.5,
+          "delta": 0,
+          "deltaUsd": 0,
           "isNew": false
         },
         {
@@ -1711,10 +1711,10 @@
         "holderCount": 100,
         "totalAmount": 66497140603,
         "totalUsd": 66398990823,
-        "netFlowAmount": -149003.57,
-        "netFlowUsd": -148784,
-        "accumulators": 7,
-        "distributors": 8
+        "netFlowAmount": 0,
+        "netFlowUsd": 0,
+        "accumulators": 0,
+        "distributors": 0
       },
       "source": "ethplorer.io (top token holders)",
       "status": "ok"
@@ -1738,8 +1738,8 @@
           "entity": null,
           "type": "unknown",
           "share": 8.22,
-          "delta": -58544.166,
-          "deltaUsd": -58528.12,
+          "delta": 0,
+          "deltaUsd": 0,
           "isNew": false
         },
         {
@@ -1864,8 +1864,8 @@
           "entity": null,
           "type": "unknown",
           "share": 0.98,
-          "delta": 14534.1057,
-          "deltaUsd": 14530.12,
+          "delta": 0,
+          "deltaUsd": 0,
           "isNew": false
         },
         {
@@ -1906,8 +1906,8 @@
           "entity": null,
           "type": "unknown",
           "share": 0.76,
-          "delta": -16865874.4504,
-          "deltaUsd": -16861253.2,
+          "delta": 0,
+          "deltaUsd": 0,
           "isNew": false
         },
         {
@@ -2130,8 +2130,8 @@
           "entity": null,
           "type": "unknown",
           "share": 0.38,
-          "delta": -244101.8029,
-          "deltaUsd": -244034.92,
+          "delta": 0,
+          "deltaUsd": 0,
           "isNew": false
         },
         {
@@ -2158,8 +2158,8 @@
           "entity": null,
           "type": "unknown",
           "share": 0.35,
-          "delta": 139485.8374,
-          "deltaUsd": 139447.62,
+          "delta": 0,
+          "deltaUsd": 0,
           "isNew": false
         },
         {
@@ -2200,8 +2200,8 @@
           "entity": null,
           "type": "unknown",
           "share": 0.24,
-          "delta": 239948.5526,
-          "deltaUsd": 239882.81,
+          "delta": 0,
+          "deltaUsd": 0,
           "isNew": false
         },
         {
@@ -2396,8 +2396,8 @@
           "entity": null,
           "type": "unknown",
           "share": 0.21,
-          "delta": -1062.2401,
-          "deltaUsd": -1061.95,
+          "delta": 0,
+          "deltaUsd": 0,
           "isNew": false
         },
         {
@@ -2648,8 +2648,8 @@
           "entity": null,
           "type": "unknown",
           "share": 0.14,
-          "delta": 5717.8277,
-          "deltaUsd": 5716.26,
+          "delta": 0,
+          "deltaUsd": 0,
           "isNew": false
         },
         {
@@ -2774,8 +2774,8 @@
           "entity": null,
           "type": "unknown",
           "share": 0.13,
-          "delta": 10911983.0249,
-          "deltaUsd": 10908993.14,
+          "delta": 0,
+          "deltaUsd": 0,
           "isNew": false
         },
         {
@@ -2956,8 +2956,8 @@
           "entity": null,
           "type": "unknown",
           "share": 0.1,
-          "delta": -1303.4508,
-          "deltaUsd": -1303.09,
+          "delta": 0,
+          "deltaUsd": 0,
           "isNew": false
         },
         {
@@ -3112,7 +3112,7 @@
           "share": 0.09,
           "delta": 0,
           "deltaUsd": 0,
-          "isNew": true
+          "isNew": false
         },
         {
           "rank": 100,
@@ -3133,10 +3133,10 @@
         "holderCount": 100,
         "totalAmount": 26656298096.79,
         "totalUsd": 26648994271,
-        "netFlowAmount": -5859216.76,
-        "netFlowUsd": -5857611,
-        "accumulators": 5,
-        "distributors": 6
+        "netFlowAmount": 0,
+        "netFlowUsd": 0,
+        "accumulators": 0,
+        "distributors": 1
       },
       "source": "ethplorer.io (top token holders)",
       "status": "ok"
@@ -3162,35 +3162,35 @@
           "share": null,
           "delta": 0,
           "deltaUsd": 0,
-          "isNew": true
+          "isNew": false
         },
         {
           "rank": 2,
           "address": "5tzFkiKscXHK5ZXCGbXZxdw7gTjjD1mBwuoFbhUvuAi9",
           "short": "5tzFki…UvuAi9",
-          "amount": 2374031.8894,
-          "usd": 165564983.96,
+          "amount": 2373992.8913,
+          "usd": 165562264.24,
           "label": "Binance",
           "entity": "Binance",
           "type": "exchange",
           "share": null,
-          "delta": 0,
-          "deltaUsd": 0,
-          "isNew": true
+          "delta": -38.9981,
+          "deltaUsd": -2719.73,
+          "isNew": false
         },
         {
           "rank": 3,
           "address": "H8sMJSCQxfKiFTCfDR3DUMLPwcRbM61LGFJ8N4dK3WjS",
           "short": "H8sMJS…dK3WjS",
-          "amount": 52653.5049,
-          "usd": 3672055.43,
+          "amount": 52651.0579,
+          "usd": 3671884.78,
           "label": null,
           "entity": null,
           "type": "unknown",
           "share": null,
-          "delta": 0,
-          "deltaUsd": 0,
-          "isNew": true
+          "delta": -2.447,
+          "deltaUsd": -170.66,
+          "isNew": false
         },
         {
           "rank": 4,
@@ -3202,19 +3202,19 @@
           "entity": null,
           "type": "unknown",
           "share": null,
-          "delta": -12496227.0699,
-          "deltaUsd": -871486875.86,
+          "delta": 0,
+          "deltaUsd": 0,
           "isNew": false
         }
       ],
       "aggregates": {
         "holderCount": 4,
-        "totalAmount": 16700823.24,
-        "totalUsd": 1164715412,
-        "netFlowAmount": -12496227.07,
-        "netFlowUsd": -871486876,
+        "totalAmount": 16700781.79,
+        "totalUsd": 1164712522,
+        "netFlowAmount": -41.45,
+        "netFlowUsd": -2890,
         "accumulators": 0,
-        "distributors": 1
+        "distributors": 2
       },
       "source": "Solana RPC getMultipleAccounts (solana-rpc.publicnode.com)",
       "status": "ok"
