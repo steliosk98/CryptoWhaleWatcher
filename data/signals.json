@@ -1,84 +1,84 @@
 {
-  "updatedAt": "2026-06-26T14:14:29.730Z",
+  "updatedAt": "2026-06-27T04:13:30.903Z",
   "assets": {
     "BTC": {
-      "exchangeNetFlow1dUsd": 0,
-      "exchangeNetFlow7dUsd": 0,
+      "exchangeNetFlow1dUsd": 34332051,
+      "exchangeNetFlow7dUsd": 34332051,
       "exchangeNetFlowZ": 0,
       "exchangeLean": "neutral",
       "whaleNetFlow7dUsd": 0,
       "whaleAccumulationScore": null,
       "whaleLean": "neutral",
-      "exchangeReserveAmount": 570151.21,
+      "exchangeReserveAmount": 570721.19,
       "reserveChange30dPct": null,
       "reserveLean": "neutral",
-      "priceChange7dPct": -4.6,
+      "priceChange7dPct": -5.17,
       "divergence": "none",
-      "samples": 1
+      "samples": 2
     },
     "ETH": {
-      "exchangeNetFlow1dUsd": 0,
-      "exchangeNetFlow7dUsd": 0,
+      "exchangeNetFlow1dUsd": -68402254,
+      "exchangeNetFlow7dUsd": -68402254,
       "exchangeNetFlowZ": 0,
       "exchangeLean": "neutral",
       "whaleNetFlow7dUsd": 0,
       "whaleAccumulationScore": null,
       "whaleLean": "neutral",
-      "exchangeReserveAmount": 4376846.27,
+      "exchangeReserveAmount": 4333502.96,
       "reserveChange30dPct": null,
       "reserveLean": "neutral",
-      "priceChange7dPct": -8.83,
+      "priceChange7dPct": -7.51,
       "divergence": "none",
-      "samples": 1
+      "samples": 2
     },
     "USDT": {
-      "exchangeNetFlow1dUsd": 0,
-      "exchangeNetFlow7dUsd": 0,
+      "exchangeNetFlow1dUsd": -34309796,
+      "exchangeNetFlow7dUsd": -34309796,
       "exchangeNetFlowZ": 0,
       "exchangeLean": "neutral",
-      "whaleNetFlow7dUsd": 0,
+      "whaleNetFlow7dUsd": -24186352,
       "whaleAccumulationScore": null,
       "whaleLean": "neutral",
-      "exchangeReserveAmount": 22619348548.91,
+      "exchangeReserveAmount": 22507180364.24,
       "reserveChange30dPct": null,
       "reserveLean": "neutral",
-      "priceChange7dPct": 0.04,
+      "priceChange7dPct": -0.05,
       "divergence": "none",
-      "samples": 1
+      "samples": 2
     },
     "USDC": {
       "exchangeNetFlow1dUsd": 0,
       "exchangeNetFlow7dUsd": 0,
       "exchangeNetFlowZ": 0,
       "exchangeLean": "neutral",
-      "whaleNetFlow7dUsd": 0,
+      "whaleNetFlow7dUsd": -85020646,
       "whaleAccumulationScore": null,
       "whaleLean": "neutral",
       "exchangeReserveAmount": 0,
       "reserveChange30dPct": null,
       "reserveLean": "neutral",
-      "priceChange7dPct": -0.03,
+      "priceChange7dPct": 0,
       "divergence": "none",
-      "samples": 1
+      "samples": 2
     },
     "SOL": {
-      "exchangeNetFlow1dUsd": 0,
-      "exchangeNetFlow7dUsd": 0,
+      "exchangeNetFlow1dUsd": 6617024,
+      "exchangeNetFlow7dUsd": 6617024,
       "exchangeNetFlowZ": 0,
       "exchangeLean": "neutral",
-      "whaleNetFlow7dUsd": 0,
+      "whaleNetFlow7dUsd": -434851,
       "whaleAccumulationScore": null,
       "whaleLean": "neutral",
-      "exchangeReserveAmount": 16745150.13,
+      "exchangeReserveAmount": 16836773.28,
       "reserveChange30dPct": null,
       "reserveLean": "neutral",
-      "priceChange7dPct": -0.1,
-      "divergence": "none",
-      "samples": 1
+      "priceChange7dPct": 4.05,
+      "divergence": "bearish",
+      "samples": 2
     }
   },
   "dryPowder": {
-    "usd": 93046735673,
+    "usd": 93176210534,
     "change7dPct": null
   }
 }
