@@ -1,11 +1,12 @@
 {
-  "generatedAt": "2026-06-27T19:27:02.029Z",
+  "generatedAt": "2026-06-28T04:14:19.942Z",
   "assetCount": 5,
-  "okCount": 3,
+  "okCount": 5,
   "sources": [
     "Solana RPC getMultipleAccounts (solana-rpc.publicnode.com)",
     "blockchain.info (curated BTC whales)",
     "coingecko.com (prices)",
+    "ethplorer.io (top token holders)",
     "public JSON-RPC (ethereum-rpc.publicnode.com)"
   ],
   "cadence": "every 6 hours via GitHub Actions",
