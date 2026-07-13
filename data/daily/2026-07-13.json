@@ -1,0 +1,571 @@
+{
+  "date": "2026-07-13",
+  "generatedAt": "2026-07-13T03:53:04.069Z",
+  "source": "EOD snapshot from latest.json",
+  "assets": {
+    "BTC": {
+      "price": 62898,
+      "cohorts": {
+        "whale": {
+          "usd": 9392399837,
+          "amount": 149327.48,
+          "count": 3
+        },
+        "exchange": {
+          "usd": 35661485994,
+          "amount": 566973.29,
+          "count": 4
+        },
+        "contract": {
+          "usd": 0,
+          "amount": 0,
+          "count": 0
+        }
+      },
+      "netFlow": {
+        "whaleAmount": 0,
+        "whaleUsd": 0,
+        "exchangeAmount": -146.0818,
+        "exchangeUsd": -9188253
+      },
+      "concentration": {
+        "top10SharePct": 100,
+        "hhi": 2394
+      },
+      "movers": [
+        {
+          "address": "bc1qm34lsc65zpw79lxes69zkqmk6ee3ewf0j77s3h",
+          "label": "OKX",
+          "cohort": "exchange",
+          "amount": -146.0818,
+          "usd": -9188253
+        }
+      ],
+      "entrants": [],
+      "exits": [],
+      "balances": {
+        "34xp4vRoCGJym3xR7yCVPFHoCNxv4Twseo": 248597.5906,
+        "3M219KR5vEneNb47ewrPfWyb5jQ2DjxRP6": 181321.1482,
+        "bc1qgdjqv0av3q56jvd82tkdjpy7gdp9ut8tlqmgrpmv24sq90ecnvqqjwvw97": 130010.079,
+        "1FeexV6bAHb8ybZjqQMjJrcCrHGW9sb6uF": 79957.2686,
+        "bc1qa5wkgaew2dkv56kfvj49j0av5nml45x9ek9hz6": 69370.1846,
+        "bc1qm34lsc65zpw79lxes69zkqmk6ee3ewf0j77s3h": 7044.4771,
+        "1P5ZEDWTKTFGxQjZphgWPQUpe554WKDfHQ": 0.0232
+      }
+    },
+    "ETH": {
+      "price": 1789.1,
+      "cohorts": {
+        "whale": {
+          "usd": 11915,
+          "amount": 6.66,
+          "count": 1
+        },
+        "exchange": {
+          "usd": 7582527927,
+          "amount": 4238180.05,
+          "count": 10
+        },
+        "contract": {
+          "usd": 157501852250,
+          "amount": 88034124.56,
+          "count": 1
+        }
+      },
+      "netFlow": {
+        "whaleAmount": -0.009,
+        "whaleUsd": -16,
+        "exchangeAmount": -16042.3458,
+        "exchangeUsd": -28701361
+      },
+      "concentration": {
+        "top10SharePct": 100,
+        "hhi": 9110
+      },
+      "movers": [
+        {
+          "address": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
+          "label": "Beacon Deposit Contract (staking)",
+          "cohort": "contract",
+          "amount": 38567.801,
+          "usd": 69001653
+        },
+        {
+          "address": "0x28C6c06298d514Db089934071355E5743bf21d60",
+          "label": "Binance 14",
+          "cohort": "exchange",
+          "amount": -26329.5289,
+          "usd": -47106160
+        },
+        {
+          "address": "0x4976A4A02f38326660D17bf34b431dC6e2eb2327",
+          "label": "Binance",
+          "cohort": "exchange",
+          "amount": 10021.5187,
+          "usd": 17929499
+        },
+        {
+          "address": "0x21a31Ee1afC51d94C2eFcCAa2092aD1028285549",
+          "label": "Binance 15",
+          "cohort": "exchange",
+          "amount": -7522.2368,
+          "usd": -13458034
+        },
+        {
+          "address": "0x9696f59E4d72E237BE84fFD425DCaD154Bf96976",
+          "label": "Binance",
+          "cohort": "exchange",
+          "amount": 5567.9129,
+          "usd": 9961553
+        },
+        {
+          "address": "0xDFd5293D8e347dFe59E90eFd55b2956a1343963d",
+          "label": "Binance 16",
+          "cohort": "exchange",
+          "amount": 2219.9887,
+          "usd": 3971782
+        }
+      ],
+      "entrants": [],
+      "exits": [],
+      "balances": {
+        "0x00000000219ab540356cBB839Cbe05303d7705Fa": 88034124.5642,
+        "0xBE0eB53F46cd790Cd13851d5EFf43D12404d33E8": 1996008.3858,
+        "0x40B38765696e3d5d8d9d834D8AaD4bB6e418E489": 1220494.8754,
+        "0xF977814e90dA44bFA03b6295A0616a897441aceC": 739595.9563,
+        "0x28C6c06298d514Db089934071355E5743bf21d60": 185678.8818,
+        "0xDFd5293D8e347dFe59E90eFd55b2956a1343963d": 26093.9707,
+        "0x4976A4A02f38326660D17bf34b431dC6e2eb2327": 23416.5938,
+        "0x9696f59E4d72E237BE84fFD425DCaD154Bf96976": 22978.1867,
+        "0x21a31Ee1afC51d94C2eFcCAa2092aD1028285549": 18150.3367,
+        "0x5a52E96BAcdaBb82fd05763E25335261B270Efcb": 5762.8598,
+        "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045": 6.6601,
+        "0x2910543Af39abA0Cd09dBb2D50200b3E800A63D2": 0.0017
+      }
+    },
+    "USDT": {
+      "price": 0.999291,
+      "cohorts": {
+        "whale": {
+          "usd": 40644209619,
+          "amount": 40673046808.95,
+          "count": 94
+        },
+        "exchange": {
+          "usd": 21111775005,
+          "amount": 21126753873.3,
+          "count": 6
+        },
+        "contract": {
+          "usd": 0,
+          "amount": 0,
+          "count": 0
+        }
+      },
+      "netFlow": {
+        "whaleAmount": -71808856.4121,
+        "whaleUsd": -71757944,
+        "exchangeAmount": 46835216.0383,
+        "exchangeUsd": 46802010
+      },
+      "concentration": {
+        "top10SharePct": 71.71,
+        "hhi": 1144
+      },
+      "movers": [
+        {
+          "address": "0x23878914efe38d27c4d67ab83ed1b93a74d4086a",
+          "label": null,
+          "cohort": "whale",
+          "amount": -40865169.037,
+          "usd": -40836196
+        },
+        {
+          "address": "0x28c6c06298d514db089934071355e5743bf21d60",
+          "label": "Binance 14",
+          "cohort": "exchange",
+          "amount": 28775841.209,
+          "usd": 28755439
+        },
+        {
+          "address": "0xaa8ba7d4611437141192e7ceced531bc0a133efb",
+          "label": null,
+          "cohort": "whale",
+          "amount": -18464239.9789,
+          "usd": -18451149
+        },
+        {
+          "address": "0xdfd5293d8e347dfe59e90efd55b2956a1343963d",
+          "label": "Binance 16",
+          "cohort": "exchange",
+          "amount": 18059374.8292,
+          "usd": 18046571
+        },
+        {
+          "address": "0x77134cbc06cb00b66f4c7e623d5fdbf6777635ec",
+          "label": null,
+          "cohort": "whale",
+          "amount": -16931096.3117,
+          "usd": -16919092
+        },
+        {
+          "address": "0xcffad3200574698b78f32232aa9d63eabd290703",
+          "label": null,
+          "cohort": "whale",
+          "amount": 12889847.3667,
+          "usd": 12880708
+        }
+      ],
+      "entrants": [
+        "0x9696f59e4d72e237be84ffd425dcad154bf96976",
+        "0x21a31ee1afc51d94c2efccaa2092ad1028285549"
+      ],
+      "exits": [
+        "0x61b2aa17c1c1114e7583bb31f777ff4bdc7ab717",
+        "0x8e9494b8b9a8fb885e7f5dcefbebf552054ccdd8"
+      ],
+      "balances": {
+        "0xf977814e90da44bfa03b6295a0616a897441acec": 16900000000,
+        "0x47ac0fb4f2d84898e4d9e7b4dab3c24507a6d503": 9184997799.4823,
+        "0x835678a611b28684005a5e2233695fb6cbbb0007": 5352392589.222,
+        "0x6c96de32cea08842dcc4058c14d3aaad7fa41dee": 3609263993.9707,
+        "0x5a52e96bacdabb82fd05763e25335261b270efcb": 3288472040.8724,
+        "0x5754284f345afc66a98fbb0a0afe71e0f007b949": 2293496070.4829,
+        "0x22132139bf7f3921b1cadeab931f4fbf7bf2bc9e": 1400000001.3997,
+        "0xb0a27099582833c0cb8c7a0565759ff145113d64": 910930930.1177,
+        "0x28c6c06298d514db089934071355e5743bf21d60": 743397912.9395,
+        "0x98adef6f2ac8572ec48965509d69a8dd5e8bba9d": 636617608.4546,
+        "0xa7c0d36c4698981fab42a7d8c783674c6fe2592d": 583112447.7906,
+        "0x23878914efe38d27c4d67ab83ed1b93a74d4086a": 549487620.2029,
+        "0xc5451b523d5fffe1351337a221688a62806ad91a": 500000101.02,
+        "0x42436286a9c8d63aafc2eebbca193064d68068f2": 500000014.36,
+        "0x69a722f0b5da3af02b4a205d6f0c285f4ed8f396": 500000011.02,
+        "0x25c76fa90e90f5a5a6914da07baed9a9647c3dfd": 500000010.02,
+        "0xf833685f98eba1b99947d418c9512d27c8193b1a": 500000010.02,
+        "0x3ef28b7e18c510b8fa031d7f8a1bb24a83ccceb0": 500000010.01,
+        "0x65a0947ba5175359bb457d3b34491edf4cbf7997": 500000007.02,
+        "0xcba38020cd7b6f51df6afaf507685add148f6ab6": 500000002.0431,
+        "0x5c52cc7c96bde8594e5b77d5b76d042cb5fae5f2": 500000002.02,
+        "0xe9172daf64b05b26eb18f07ac8d6d723acb48f99": 500000002.02,
+        "0x461249076b88189f8ac9418de28b365859e46bfd": 500000001.01,
+        "0xdce83237fbf279c4522e7cac4b10428e2b8694da": 387117487.2587,
+        "0x73fe25c9f052a1952eaceb1d2a2fb60e07b5dd03": 300000999.8,
+        "0xc411ab12837f63935b71b6c6643d0f7000e55e4b": 300000016.6181,
+        "0x12c5e4eeeaa20e25847b5453d23246983c512db7": 300000009.011,
+        "0xa9acc15d8b74a01e5605eb0f1e815ba98e3a16af": 283744844.0297,
+        "0x5ca38fb7cf2b587026a1650f0d2b0a13c41f5d0f": 256390406.8263,
+        "0x1f7370792a057227024e7a8cc15b40e3ed171ffc": 250000020.02,
+        "0x76bf215ade956642b056b9043e014988941bbddd": 250000003.02,
+        "0x13f52026493dccf09065952d44101c3e42b41dda": 249999990.0202,
+        "0x0607c628054a7db3d36eed7c4a408eda8260de09": 236023251,
+        "0x2f0c4d9f5b5fc81725b5ea36bfa5d8af845a9449": 225364964.0242,
+        "0x65e891ec42fcaa19459fe6221163e1a3f8cf7ea6": 220000000,
+        "0xe404fe9b7b0d0e88e77731517202fb392f67cd74": 220000000,
+        "0x7f61dc44c15ca818f96c6fc40739e5aa732e240c": 220000000,
+        "0x01f66697aec1e7de7773115243247952245fd3a4": 220000000,
+        "0x32dc16f4631a27b042a974d05c1ccf8a303e8199": 220000000,
+        "0xedc0a430dd32eb8cfcc3a344979f0e21bc48bf0d": 220000000,
+        "0x5b873ffcad5dccdc61c1a53c391fb76cb316a841": 220000000,
+        "0x7fe830ec109e112f549d6ee9d3e9540e7785997b": 220000000,
+        "0x1a557020c52f9d2495b2c12eb137ee7b5d467a4f": 220000000,
+        "0x7cfe28094f4531809992ed89060a61413116365d": 220000000,
+        "0x99c9fc46f92e8a1c0dec1b1747d010903e884be1": 219428034.272,
+        "0xf95334a86d09a6eec74d69da344efaca424b13a9": 200000004.01,
+        "0x44f1b02d78ed39962600df6440cf8eed3e02a96b": 185412957.5042,
+        "0xf016e1d45ef23bdd414e7a2e4d46e1b34577b508": 183099600.514,
+        "0xf54cc14343701a3adbae07e2283c4aeac8dd179a": 176006477,
+        "0x5b234aaab0f61d346a3ef8faca474c1c19f80c1f": 162188274.0723,
+        "0xbee64116bd2b1b6373273d01664fbc5532dad06d": 152146680.749,
+        "0xd67f25ef2399a0c769b1a35634c5ce77166714db": 150000009.02,
+        "0xaa8ba7d4611437141192e7ceced531bc0a133efb": 147628449.3716,
+        "0x8c33b442881be03195b864c9be175f38bd272158": 133252658.3276,
+        "0x54a679e853281a440911f72eae0e24107e9413dc": 131204739.7919,
+        "0x559432e18b281731c054cd703d4b49872be4ed53": 129411258.7848,
+        "0xf418263a6468c80d3bcb71033c56aacf81b241ba": 126572874.3044,
+        "0x18e296053cbdf986196903e889b7dca7a73882f6": 123919003.069,
+        "0x43684d03d81d3a4c70da68febdd61029d426f042": 122953055.2317,
+        "0xcffad3200574698b78f32232aa9d63eabd290703": 117218945.1278,
+        "0x72132bf09a9ee6517f3f1d997b4b3cd2115e5991": 115000000.0197,
+        "0xe2e7a17dff93280dec073c995595155283e3c372": 110011985.6429,
+        "0x9022b72d67999a3b0d1330ecefca56f83d2ec52c": 110000094.3143,
+        "0xf89d7b9c864f589bbf53a82105107622b35eaa40": 107302018.1694,
+        "0x8167a1ebf00ff5886d1b5908419bb1159d8cf6a4": 104109160.2976,
+        "0xe4e3eca65460c14a5245b09fee15a92ba09458b6": 103147613.9895,
+        "0x469afe803c54a36674c55231489cf4b61da8c1bc": 101589302.0855,
+        "0x371c31f9221459e10565cfe78937cbda5db1791c": 101000000.015,
+        "0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7": 100053860.8345,
+        "0x400d8280acf364f683e989462879fd8dd358067d": 100000000,
+        "0x3fe705e2ffcaee8d7287de047def35db3e794c76": 94149343.656,
+        "0x188034c342712bed86ad6ec97b72ecb7171bfbb9": 93617540.4667,
+        "0x37a807a10e3d0d9c55d089a481e9b30fb7839d64": 93585428.8994,
+        "0xd00dc79e2b21b73f51ff3a19689b89d6f30609d8": 91344579.2906,
+        "0xfaae2946e846133af314d1df13684c89fa7d83dd": 87352630.8437,
+        "0xee136c0389733849dd710ac7104e92c6bf497574": 85000420,
+        "0x3b98b9e9cb75c1cb1729aab8f09ced2936505e4f": 78148561.975,
+        "0x434742703055bd20f42142d9d70b0735a5eb1b14": 77779197.4478,
+        "0x56eddb7aa87536c09ccc2793473599fd21a8b17f": 77182241.4987,
+        "0x217e42ceb2eae9ecb788fdf0e31c806c531760a3": 74089132.9076,
+        "0x000000000004444c5dc75cb358380d2e3de08a90": 72621102.0851,
+        "0x604dd02d620633ae427888d41bfd15e38483736e": 72013489.5337,
+        "0x5f0f137eaff81d9e21c1140eb4607261cba8ac56": 71987087.0352,
+        "0x7713974908be4bed47172370115e8b1219f4a5f0": 70335327.1844,
+        "0xdfd5293d8e347dfe59e90efd55b2956a1343963d": 69519862.6119,
+        "0xb203e1170a30e68dc5b20aac08aa42619842c79e": 68488985.0452,
+        "0x9696f59e4d72e237be84ffd425dcad154bf96976": 67541901.886,
+        "0x69166e49d2fd23e4cbea767d7191be423a7733a5": 65047083.933,
+        "0x0b07f64abc342b68aec57c0936e4b6fd4452967e": 63882199.0309,
+        "0xeea81c4416d71cef071224611359f6f99a4c4294": 62478565.8732,
+        "0x804a7934bd8cd166d35d8fb5a1eb1035c8ee05ce": 60000001.9354,
+        "0x77134cbc06cb00b66f4c7e623d5fdbf6777635ec": 59455362.3599,
+        "0x0c7452aa978aebd0d52dd995fc285c7472723e7d": 58392080.4604,
+        "0x21a31ee1afc51d94c2efccaa2092ad1028285549": 57822154.9924,
+        "0x7dafba1d69f6c01ae7567ffd7b046ca03b706f83": 56628223.8489,
+        "0x410e226dfbf394b24a1ff599606c8894eb5d4596": 55749079.0754,
+        "0x483d2bf4f2789f01b59d4381d0b9595fd092ae9b": 55629037.2279,
+        "0x298d04a8b95bdc0ab04d87def5a7c783e9905de1": 53127778.6827,
+        "0x45a7c2d3e1439650812a3bd43eb35c48d6379f8c": 51864045.8044,
+        "0x01e2fb8f565d5e3cb9e0e8f0b607a96169b94393": 51500003.0107
+      }
+    },
+    "USDC": {
+      "price": 0.999753,
+      "cohorts": {
+        "whale": {
+          "usd": 26226838768,
+          "amount": 26233318397.15,
+          "count": 100
+        },
+        "exchange": {
+          "usd": 0,
+          "amount": 0,
+          "count": 0
+        },
+        "contract": {
+          "usd": 0,
+          "amount": 0,
+          "count": 0
+        }
+      },
+      "netFlow": {
+        "whaleAmount": 26796410.6608,
+        "whaleUsd": 26789792,
+        "exchangeAmount": 0,
+        "exchangeUsd": 0
+      },
+      "concentration": {
+        "top10SharePct": 52.37,
+        "hhi": 495
+      },
+      "movers": [
+        {
+          "address": "0xee7ae85f2fe2239e27d9c1e23fffe168d63b4055",
+          "label": null,
+          "cohort": "whale",
+          "amount": 98166393.1873,
+          "usd": 98142146
+        },
+        {
+          "address": "0xfbe804a9a7009dac6e12307dab066a9733bcc33d",
+          "label": null,
+          "cohort": "whale",
+          "amount": -67836979.7884,
+          "usd": -67820224
+        },
+        {
+          "address": "0x445f16314284b43dfa1fd3cd77b9dea4a1bebd97",
+          "label": null,
+          "cohort": "whale",
+          "amount": 17985242.8204,
+          "usd": 17980800
+        },
+        {
+          "address": "0xf89d7b9c864f589bbf53a82105107622b35eaa40",
+          "label": null,
+          "cohort": "whale",
+          "amount": -17829246.4005,
+          "usd": -17824843
+        },
+        {
+          "address": "0x1c3b25019ed4e4876e7af7903cc3e1e23287c337",
+          "label": null,
+          "cohort": "whale",
+          "amount": -14886523.21,
+          "usd": -14882846
+        },
+        {
+          "address": "0x2744dfd9898f0babbc570cc594bbbc84b487a22b",
+          "label": null,
+          "cohort": "whale",
+          "amount": -14173533.6916,
+          "usd": -14170033
+        }
+      ],
+      "entrants": [
+        "0x66dae5dc633c09e9f788768692dd93265b9f71d2",
+        "0x0e5da69e979028a82e871e62627439788435437f",
+        "0xfa5dd3578a15a35811cb13110f6d3c220afac412"
+      ],
+      "exits": [
+        "0x6a6cc8967a51b37ab83fc0a63b3fc26b7905e4ab",
+        "0x4d38769e5a15513b6312895a5ce17f0797a59160",
+        "0x1dfc6bec8499fcb5e3151c7c6d27feb9d7eae1d4"
+      ],
+      "balances": {
+        "0x37305b1cd40574e4c5ce33f8e8306be057fd7341": 4457784317.0084,
+        "0xe1940f578743367f38d3f25c2d2d32d6636929b6": 1699999999.0396,
+        "0xffa69c0080582098af595156240214b742735a5e": 1582999999.8601,
+        "0xad354cfbaa4a8572dd6df021514a3931a8329ef5": 1400000000.5201,
+        "0x40ec5b33f54e0e8a33a975908c5ba1c14e5bbbdf": 1222440568.4181,
+        "0x01b8697695eab322a339c4bf75740db75dc9375e": 751054310.4583,
+        "0xee7ae85f2fe2239e27d9c1e23fffe168d63b4055": 725137694.4425,
+        "0x38aaef3782910bdd9ea3566c839788af6ff9b200": 712218119.146,
+        "0x08f619716db7c6245401b543e59acac1d25cb483": 594253857.3766,
+        "0x36db199f0a1cd131ad0b5cf4fe94286faab9fda5": 593119519.0345,
+        "0x3d09d2354530466d32ed37c6ad19ea58504a0c37": 529579778.5739,
+        "0x3b4d794a66304f130a4db8f2551b0070dfcf5ca7": 520408273.3724,
+        "0xa5e4939f7cdd01a22d34dc9a29e45e9925b6cd62": 401151889.8903,
+        "0x6abc301915d33ce024a27d357d0b7679c9ae74c0": 348000000.3332,
+        "0xe0356742a0441e64e5247dd4f4d56f9e4549e764": 348000000.3332,
+        "0xcd180af7cd1fd3a2e88e524c29a9ece0e2bf53a6": 348000000.3332,
+        "0xf53e4fd94365f7f8fc14087f984ff19b819fd99a": 348000000.3332,
+        "0x1d7ceccee9d055ce790e463204ec8148d4952908": 348000000.3332,
+        "0x0efba7fadab2b7c95a601be6fe9dcb93f4a7b5d1": 348000000.3332,
+        "0x54999886b6153975d839220df767475d59d7c907": 348000000.3332,
+        "0xb83ebfefb31846decf1273e4f8084b670a3381bf": 348000000.3232,
+        "0xd3c7981ec03c9d92714ec699971dc29dc5801675": 348000000.3232,
+        "0xd29dc81e3db90ca4f6c51d5b2ced61c1a8e19502": 348000000.3232,
+        "0x100c5e20c4261bc2056ed6b4f64cd9cff2f8e488": 348000000.3132,
+        "0x5f20b82bfa794c9cba8a15a49a02f6879e6af77c": 290857305.3278,
+        "0xb9277540d8cf63db984aabba91d2669fa67af823": 268000000.2412,
+        "0xc3f2f6c9a765c367c33ed11827bb676250481ca7": 268000000.2412,
+        "0x38deed04e386376d2fda3fafc7e64867e9702e66": 268000000.2412,
+        "0xa073345811e360e9b66f24bc11f3a4bfa924f236": 245092999.7393,
+        "0x1c3b25019ed4e4876e7af7903cc3e1e23287c337": 235374798.2551,
+        "0xfbe804a9a7009dac6e12307dab066a9733bcc33d": 231415257.4383,
+        "0xe55e3c4b4dfe998adb0fdc61b334842bc18812f3": 214391483.8357,
+        "0xe20d20b0cc4e44cd23d5b0488d5250a9ac426875": 200000000.35,
+        "0x98c23e9d8f34fefb1b7bd6a91b7ff122f4e16f5c": 199029906.2868,
+        "0x1cba79cf8dd10d0d6cd6f098b34dfc3499377829": 169541563.6511,
+        "0xf89d7b9c864f589bbf53a82105107622b35eaa40": 139220412.2134,
+        "0x2744dfd9898f0babbc570cc594bbbc84b487a22b": 129787346.487,
+        "0xb166b43b24c2e42a12b2f788ae0efa536a914530": 112387728.7208,
+        "0xa9d69f2f56df2cb8b66d0f2c6c867407a1296c5f": 112152880.1801,
+        "0x38195abcb374a78428a10b85f1562e6829b560b0": 108092487.9851,
+        "0x1597e4b7cf6d2877a1d690b6088668afdb045763": 108086073.2452,
+        "0x090649137ca0037442877bbdbc7edfb9be58cad9": 108000000.1172,
+        "0xb7cd010b53d23a794d754886c3b928be6a3315dc": 108000000.1072,
+        "0x92f01a00139d4ec35774228d437d8198395d5866": 108000000.0972,
+        "0x48eacec240176e28abc63fe08dbf6af0f1043783": 102755385.5013,
+        "0x8c8461b20a3f72f978ff3c5863ffb180587ad98f": 101308343.0665,
+        "0xbe480d406671bb3673633292ddfad0144250b2dd": 100000000.09,
+        "0x3f07566d6b5febfbd0b813b857bb388c2bd15569": 96700009.0505,
+        "0xeffba2c9b5c31f204ebf197f00ffdd8f55c0c3f2": 94890643.6352,
+        "0x448c642074d7be4c5fc25929bb5536f772cd9d5c": 94105202.1047,
+        "0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb": 87365265.7193,
+        "0x6b71f27b465e78923597b390967575e39166121e": 86719196.7223,
+        "0x6709383e211ab08a6e3270532e756220400424a6": 84981386.3996,
+        "0x0be82fe3f23cc5378e718eeaeacf9ac53a333bdb": 77985760.9453,
+        "0x87fc29c23a5a408f490a500d680c133644525162": 76256146.3374,
+        "0x67ce0fe57ce9e524cce970f3ff18bf89f0d426cd": 76233804.7659,
+        "0x000000000004444c5dc75cb358380d2e3de08a90": 75106932.6021,
+        "0x5f12c426ab07a0e163f9b92a1f68c60f74d4d83a": 75000000,
+        "0x908ebe617dc5e34112abb3a7fa4d444797ea4f1c": 75000000,
+        "0xa339d279e0a3a9ede11eceac2ec9529eebdae12c": 74118711.0656,
+        "0x445f16314284b43dfa1fd3cd77b9dea4a1bebd97": 72109216.9718,
+        "0x324316a23cd9dc84681e730225559015798567a7": 71129860.8192,
+        "0x1508c10b821a0988b640567beed31f9c49b4a83b": 69987911.1739,
+        "0x18e2d6073b5a78db03b13a890f1708a2acf65d96": 67000000.0603,
+        "0xb6f21c97ca5360a95912ac8821e91378c0212b0a": 67000000.0603,
+        "0xefeca1fd01d10f47ebbd82b5ff9629ad9b082cfe": 67000000.0603,
+        "0x0584f6a93718d7de52b40a71b42439acee4be655": 67000000.0603,
+        "0x55fe002aeff02f77364de339a1292923a15844b8": 63794558.3201,
+        "0x804a7934bd8cd166d35d8fb5a1eb1035c8ee05ce": 60000002.3494,
+        "0x0f896345b538ac140ac84f3367a65a34efd8fcbf": 59394716.154,
+        "0xa9d1e08c7793af67e9d92fe308d5697fb81d3e43": 59017309.2885,
+        "0xcd949f7e4a710a01550132c1f19df4e8f4e3e921": 58216231.0143,
+        "0xd8a3c2901b736170b70088a0df9aa914317d43c6": 57755100.0312,
+        "0x7a662dc8f1c28bd851ae0b00a85aa823891a8f3d": 56186479.4483,
+        "0x04653d164b289f74dd4130afc07e28d68407f0ea": 56050068.2073,
+        "0xefdca8d1f52cf3a85dc9eb797d7bcc5e9adffe9c": 55451387.1324,
+        "0xf584f8728b874a6a5c7a8d4d387c9aae9172d621": 54559886.8306,
+        "0x879d8aa88c4e4baaf4c7da0f7290e2c483bcaa51": 54000000.0486,
+        "0x2d3e6f78efca59f15220b4478cfc5d06daaff504": 54000000.0486,
+        "0xa023f08c70a23abc7edfc5b6b5e171d78dfc947e": 53847604.6335,
+        "0x4e7292e03703e38ad5dbee25fadbf9e61016b3fe": 52854380.1239,
+        "0x77777777dcc4d5a8b6e418fd04d8997ef11000ee": 52496969.5122,
+        "0x0af4a00ca9208e48121d5010be1ab33dacd6380f": 52469413.9346,
+        "0xcee284f754e854890e311e3280b767f80797180d": 52367817.5099,
+        "0x5d2913d10be73423ad816ad8737be538d4b162f5": 52356807.0935,
+        "0x66dae5dc633c09e9f788768692dd93265b9f71d2": 51621647.7743,
+        "0xdf4937e037db21d1805013d64f97f7c4e4dc855b": 51481524.2977,
+        "0x60ed97949dfb190df18087725b705e8bb213e9b3": 50459163.441,
+        "0x2f9ec5662c1199c028edc1f3eca0c22aa279f2b4": 50000720.0001,
+        "0xbcb302a64adb7f2c8697e17c1e948f5b058f0e49": 50000010.62,
+        "0x7a1ff191e0e496bfd1f38a0e45627b3cceb77a3e": 50000000.02,
+        "0xbc84f45c0eee6e650a743d2e58e3e3af04f990be": 50000000.02,
+        "0x499f23ee6d52be85971f30913edc2525c22b4802": 50000000.01,
+        "0x3425519651e4c42833633fe5c0e24ed89c1023a3": 49502169.6939,
+        "0xb93b82f33e2653b544e046128f3cb47879dc917b": 48135734.531,
+        "0xa21c1c71bdb218b3288df1f0494ce4c62b9f3ff6": 47000000.0423,
+        "0x01890472f257c482715d284bbe4810292c8a2cab": 45995676.3892,
+        "0x86d3a049c4c20d618c426c9de3d9d918db14b6de": 44878504.122,
+        "0x0e5da69e979028a82e871e62627439788435437f": 44445774.7214,
+        "0xfa5dd3578a15a35811cb13110f6d3c220afac412": 43646387.0553
+      }
+    },
+    "SOL": {
+      "price": 75.77,
+      "cohorts": {
+        "whale": {
+          "usd": 2178012,
+          "amount": 28745.05,
+          "count": 2
+        },
+        "exchange": {
+          "usd": 820646890,
+          "amount": 10830762.7,
+          "count": 2
+        },
+        "contract": {
+          "usd": 0,
+          "amount": 0,
+          "count": 0
+        }
+      },
+      "netFlow": {
+        "whaleAmount": -5686.4551,
+        "whaleUsd": -430863,
+        "exchangeAmount": 148810.1705,
+        "exchangeUsd": 11275347
+      },
+      "concentration": {
+        "top10SharePct": 100,
+        "hhi": 7364
+      },
+      "movers": [
+        {
+          "address": "5tzFkiKscXHK5ZXCGbXZxdw7gTjjD1mBwuoFbhUvuAi9",
+          "label": "Binance",
+          "cohort": "exchange",
+          "amount": 148810.1705,
+          "usd": 11275347
+        },
+        {
+          "address": "H8sMJSCQxfKiFTCfDR3DUMLPwcRbM61LGFJ8N4dK3WjS",
+          "label": null,
+          "cohort": "whale",
+          "amount": -5686.4551,
+          "usd": -430863
+        }
+      ],
+      "entrants": [],
+      "exits": [],
+      "balances": {
+        "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM": 9170006.1436,
+        "5tzFkiKscXHK5ZXCGbXZxdw7gTjjD1mBwuoFbhUvuAi9": 1660756.5591,
+        "H8sMJSCQxfKiFTCfDR3DUMLPwcRbM61LGFJ8N4dK3WjS": 24972.1208,
+        "GThUX1Atko4tqhN2NaiTazWSeFWMuiUvfFnyJyUghFMJ": 3772.9252
+      }
+    }
+  }
+}
