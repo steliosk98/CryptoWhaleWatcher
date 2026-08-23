@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-22T01:46:42.958Z",
+  "updatedAt": "2026-08-23T01:56:48.442Z",
   "assets": [
     "BTC",
     "ETH",
@@ -10185,6 +10185,56 @@
           "whaleNetFlowUsd": -1582374,
           "exchangeNetFlowUsd": -19404060,
           "exchangeReserveAmount": 11941008.64
+        }
+      }
+    },
+    {
+      "date": "2026-08-23",
+      "assets": {
+        "BTC": {
+          "price": 77216,
+          "whaleUsd": 11530470696,
+          "exchangeUsd": 46539541810,
+          "contractUsd": 0,
+          "whaleNetFlowUsd": 0,
+          "exchangeNetFlowUsd": 387759232,
+          "exchangeReserveAmount": 602718.89
+        },
+        "ETH": {
+          "price": 2424.71,
+          "whaleUsd": 16100,
+          "exchangeUsd": 10311911387,
+          "contractUsd": 218213140180,
+          "whaleNetFlowUsd": 0,
+          "exchangeNetFlowUsd": 66213451,
+          "exchangeReserveAmount": 4252843.18
+        },
+        "USDT": {
+          "price": 0.999804,
+          "whaleUsd": 37541200978,
+          "exchangeUsd": 20991120227,
+          "contractUsd": 0,
+          "whaleNetFlowUsd": 3515336,
+          "exchangeNetFlowUsd": -35852819,
+          "exchangeReserveAmount": 20995235292.74
+        },
+        "USDC": {
+          "price": 0.99985,
+          "whaleUsd": 25545977167,
+          "exchangeUsd": 0,
+          "contractUsd": 0,
+          "whaleNetFlowUsd": -128023743,
+          "exchangeNetFlowUsd": 0,
+          "exchangeReserveAmount": 0
+        },
+        "SOL": {
+          "price": 95.87,
+          "whaleUsd": 2626145,
+          "exchangeUsd": 1141995431,
+          "contractUsd": 0,
+          "whaleNetFlowUsd": 260323,
+          "exchangeNetFlowUsd": -2789067,
+          "exchangeReserveAmount": 11911916.46
         }
       }
     }
