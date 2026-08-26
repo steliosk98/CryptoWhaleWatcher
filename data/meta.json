@@ -1,9 +1,10 @@
 {
-  "generatedAt": "2026-08-26T13:03:13.806Z",
+  "generatedAt": "2026-08-26T19:52:32.726Z",
   "assetCount": 5,
-  "okCount": 4,
+  "okCount": 5,
   "sources": [
     "Solana RPC getMultipleAccounts (solana-rpc.publicnode.com)",
+    "blockchain.info (curated BTC whales)",
     "coingecko.com (prices)",
     "ethplorer.io (top token holders)",
     "public JSON-RPC (ethereum-rpc.publicnode.com)"
