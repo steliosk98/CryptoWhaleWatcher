@@ -1,84 +1,84 @@
 {
-  "updatedAt": "2026-10-18T04:22:15.359Z",
+  "updatedAt": "2026-10-19T04:31:41.915Z",
   "assets": {
     "BTC": {
-      "exchangeNetFlow1dUsd": -18281410,
-      "exchangeNetFlow7dUsd": 626357982,
-      "exchangeNetFlowZ": 0.17,
+      "exchangeNetFlow1dUsd": 29036829,
+      "exchangeNetFlow7dUsd": 600971907,
+      "exchangeNetFlowZ": 0.23,
       "exchangeLean": "neutral",
       "whaleNetFlow7dUsd": 0,
       "whaleAccumulationScore": 50,
       "whaleLean": "neutral",
-      "exchangeReserveAmount": 572551.99,
-      "reserveChange30dPct": -7.49,
+      "exchangeReserveAmount": 572904.26,
+      "reserveChange30dPct": -7.5,
       "reserveLean": "bullish",
-      "priceChange7dPct": -1.22,
+      "priceChange7dPct": -2.06,
       "divergence": "none",
-      "samples": 115
+      "samples": 116
     },
     "ETH": {
-      "exchangeNetFlow1dUsd": -2839,
-      "exchangeNetFlow7dUsd": 156177266,
-      "exchangeNetFlowZ": 0.05,
+      "exchangeNetFlow1dUsd": -3999833,
+      "exchangeNetFlow7dUsd": 118686827,
+      "exchangeNetFlowZ": 0.1,
       "exchangeLean": "neutral",
-      "whaleNetFlow7dUsd": 2,
-      "whaleAccumulationScore": 54.3,
+      "whaleNetFlow7dUsd": 4,
+      "whaleAccumulationScore": 54.4,
       "whaleLean": "neutral",
-      "exchangeReserveAmount": 3880658.35,
-      "reserveChange30dPct": -1.1,
+      "exchangeReserveAmount": 3879006.72,
+      "reserveChange30dPct": -3.12,
       "reserveLean": "bullish",
-      "priceChange7dPct": -3.24,
+      "priceChange7dPct": -5.68,
       "divergence": "bullish",
-      "samples": 115
+      "samples": 116
     },
     "USDT": {
-      "exchangeNetFlow1dUsd": 40660441,
-      "exchangeNetFlow7dUsd": 967251252,
-      "exchangeNetFlowZ": 0.13,
+      "exchangeNetFlow1dUsd": 26616664,
+      "exchangeNetFlow7dUsd": 1064717251,
+      "exchangeNetFlowZ": 0.1,
       "exchangeLean": "neutral",
-      "whaleNetFlow7dUsd": -693950986,
+      "whaleNetFlow7dUsd": -705237741,
       "whaleAccumulationScore": 43.8,
       "whaleLean": "neutral",
-      "exchangeReserveAmount": 20997979344.51,
-      "reserveChange30dPct": -0.04,
+      "exchangeReserveAmount": 21024616651.97,
+      "reserveChange30dPct": -0.56,
       "reserveLean": "neutral",
       "priceChange7dPct": 0,
       "divergence": "none",
-      "samples": 115
+      "samples": 116
     },
     "USDC": {
       "exchangeNetFlow1dUsd": 0,
       "exchangeNetFlow7dUsd": 0,
       "exchangeNetFlowZ": 0,
       "exchangeLean": "neutral",
-      "whaleNetFlow7dUsd": -480194846,
-      "whaleAccumulationScore": 61.9,
+      "whaleNetFlow7dUsd": -298842248,
+      "whaleAccumulationScore": 73.2,
       "whaleLean": "bullish",
       "exchangeReserveAmount": 0,
       "reserveChange30dPct": null,
       "reserveLean": "neutral",
       "priceChange7dPct": 0.01,
       "divergence": "none",
-      "samples": 115
+      "samples": 116
     },
     "SOL": {
-      "exchangeNetFlow1dUsd": -4679966,
-      "exchangeNetFlow7dUsd": 58458557,
-      "exchangeNetFlowZ": -0.51,
+      "exchangeNetFlow1dUsd": 6423458,
+      "exchangeNetFlow7dUsd": 49369000,
+      "exchangeNetFlowZ": 0.07,
       "exchangeLean": "neutral",
-      "whaleNetFlow7dUsd": 1250229,
-      "whaleAccumulationScore": 42.5,
+      "whaleNetFlow7dUsd": 1459524,
+      "whaleAccumulationScore": 52.4,
       "whaleLean": "neutral",
-      "exchangeReserveAmount": 12524483.01,
-      "reserveChange30dPct": 11.67,
+      "exchangeReserveAmount": 12585594.78,
+      "reserveChange30dPct": 12.29,
       "reserveLean": "bearish",
-      "priceChange7dPct": -4.72,
+      "priceChange7dPct": -7.12,
       "divergence": "bullish",
-      "samples": 115
+      "samples": 116
     }
   },
   "dryPowder": {
-    "usd": 83244731421,
-    "change7dPct": -0.57
+    "usd": 83375255786,
+    "change7dPct": -0.3
   }
 }
