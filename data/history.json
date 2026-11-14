@@ -1,61 +1,5 @@
 [
   {
-    "t": "2026-08-04T19:41:53.278Z",
-    "totalUsd": 309839524013,
-    "assets": {
-      "BTC": {
-        "totalAmount": 721203.58,
-        "totalUsd": 46341657249,
-        "netFlowUsd": -3628125,
-        "priceUsd": 64256,
-        "whaleUsd": 9595186555,
-        "exchangeUsd": 36746470682,
-        "whaleNetFlowUsd": 0,
-        "exchangeNetFlowUsd": -3627894
-      },
-      "ETH": {
-        "totalAmount": 93424396,
-        "totalUsd": 175323024268,
-        "netFlowUsd": 6384432,
-        "priceUsd": 1876.63,
-        "whaleUsd": 12442,
-        "exchangeUsd": 7924070700,
-        "whaleNetFlowUsd": 0,
-        "exchangeNetFlowUsd": 2478165
-      },
-      "USDT": {
-        "totalAmount": 62293225824.95,
-        "totalUsd": 62250181206,
-        "netFlowUsd": 15782490,
-        "priceUsd": 0.999309,
-        "whaleUsd": 41001479702,
-        "exchangeUsd": 21248701504,
-        "whaleNetFlowUsd": -17812123,
-        "exchangeNetFlowUsd": 33594613
-      },
-      "USDC": {
-        "totalAmount": 25084545840.54,
-        "totalUsd": 25075766249,
-        "netFlowUsd": 76900331,
-        "priceUsd": 0.99965,
-        "whaleUsd": 25075766249,
-        "exchangeUsd": 0,
-        "whaleNetFlowUsd": 76900331,
-        "exchangeNetFlowUsd": 0
-      },
-      "SOL": {
-        "totalAmount": 11446804.76,
-        "totalUsd": 848895041,
-        "netFlowUsd": 930652,
-        "priceUsd": 74.16,
-        "whaleUsd": 3678002,
-        "exchangeUsd": 845217039,
-        "whaleNetFlowUsd": 217605,
-        "exchangeNetFlowUsd": 713048
-      }
-    }
-  },
-  {
     "t": "2026-08-05T02:49:12.372Z",
     "totalUsd": 309697579530,
     "assets": {
@@ -20155,6 +20099,62 @@
         "whaleUsd": 7778227,
         "exchangeUsd": 701871245,
         "whaleNetFlowUsd": -626436,
+        "exchangeNetFlowUsd": 0
+      }
+    }
+  },
+  {
+    "t": "2026-11-14T22:08:41.987Z",
+    "totalUsd": 294295184497,
+    "assets": {
+      "BTC": {
+        "totalAmount": 727886.05,
+        "totalUsd": 46736107543,
+        "netFlowUsd": 0,
+        "priceUsd": 64208,
+        "whaleUsd": 9588019478,
+        "exchangeUsd": 37148088020,
+        "whaleNetFlowUsd": 0,
+        "exchangeNetFlowUsd": 0
+      },
+      "ETH": {
+        "totalAmount": 96855618.47,
+        "totalUsd": 170768078029,
+        "netFlowUsd": -1202737,
+        "priceUsd": 1763.12,
+        "whaleUsd": 10226,
+        "exchangeUsd": 5912285723,
+        "whaleNetFlowUsd": 0,
+        "exchangeNetFlowUsd": -66117000
+      },
+      "USDT": {
+        "totalAmount": 54407876337.45,
+        "totalUsd": 54375830098,
+        "netFlowUsd": 49238467,
+        "priceUsd": 0.999411,
+        "whaleUsd": 37794822159,
+        "exchangeUsd": 16581007940,
+        "whaleNetFlowUsd": -44855253,
+        "exchangeNetFlowUsd": 94093720
+      },
+      "USDC": {
+        "totalAmount": 21771400692.25,
+        "totalUsd": 21763584759,
+        "netFlowUsd": -20667483,
+        "priceUsd": 0.999641,
+        "whaleUsd": 21763584759,
+        "exchangeUsd": 0,
+        "whaleNetFlowUsd": -20667483,
+        "exchangeNetFlowUsd": 0
+      },
+      "SOL": {
+        "totalAmount": 9371265.18,
+        "totalUsd": 651584068,
+        "netFlowUsd": -2211186,
+        "priceUsd": 69.53,
+        "whaleUsd": 4954842,
+        "exchangeUsd": 646629226,
+        "whaleNetFlowUsd": -2211186,
         "exchangeNetFlowUsd": 0
       }
     }
